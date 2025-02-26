@@ -63,3 +63,5 @@ Resource.designer.cs
 # Ignore JetBrains Rider IDE files
 .idea/
 *.sln.iml
+
+.fake

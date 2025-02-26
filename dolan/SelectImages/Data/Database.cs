@@ -17,10 +17,16 @@ namespace SelectImages.Data
         {
             try
             {
-                // Get the application data directory
-                var dataDir = FileSystem.AppDataDirectory;
+                var ImageDatabase = Path.Combine(@"C:\Users\cchri\Christopher\Skole\4_Semester\fedFrontend\FED\dolan\SelectImages", "StoredImages");
+
+                // Ensure the directory exists
+                if (!Directory.Exists(ImageDatabase))
+                {
+                    Directory.CreateDirectory(ImageDatabase);
+                }
+
                 // Define the path for the database file
-                var databasePath = Path.Combine(dataDir, "ImageCarousel.db");
+                var databasePath = Path.Combine(ImageDatabase, "ImageCarousel.db");
                 // Create SQLite connection options
                 var dbOptions = new SQLiteConnectionString(databasePath, true);
                 // Initialize the SQLite connection
