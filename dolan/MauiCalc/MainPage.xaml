@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiCalc.MainPage">
+
+             <Grid RowSpacing="2" ColumnSpacing="2">
+                 <Grid.RowDefinitions>
+                     <RowDefinition Height="60" />
+                     <RowDefinition Height="45" />
+                     <RowDefinition Height="45" />
+                     <RowDefinition Height="45" />
+                     <RowDefinition Height="45" />
+                     <RowDefinition Height="45" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="50" />
+                </Grid.ColumnDefinitions>
+
+                    <Label 
+                        Text="Calculator"
+                        FontSize="Large" 
+                        HorizontalOptions="Center" 
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="5"
+                        />
+
+                    <Label 
+                        Text="Result" 
+                        Grid.Row="1" 
+                        Grid.Column="0"
+                        Grid.ColumnSpan="4"
+                        Padding="5"
+                        BackgroundColor="{StaticResource LcdBackgroundColor}"
+                        FontFamily="LCD"
+                        HorizontalTextAlignment="End"
+                        VerticalTextAlignment="End"
+                        x:Name="LCD"
+                        />                      
+                        
+                    <Button Text="1" Grid.Row="2" Grid.Column="0" Clicked="ButtonClicked"/>  
+                    <Button Text="2" Grid.Row="2" Grid.Column="1" Clicked="ButtonClicked"/>  
+                    <Button Text="3" Grid.Row="2" Grid.Column="2" Clicked="ButtonClicked"/>  
+                    <Button Text="4" Grid.Row="3" Grid.Column="0" Clicked="ButtonClicked"/>  
+                    <Button Text="5" Grid.Row="3" Grid.Column="1" Clicked="ButtonClicked"/>  
+                    <Button Text="6" Grid.Row="3" Grid.Column="2" Clicked="ButtonClicked"/>  
+                    <Button Text="7" Grid.Row="4" Grid.Column="0" Clicked="ButtonClicked"/>  
+                    <Button Text="8" Grid.Row="4" Grid.Column="1" Clicked="ButtonClicked"/>  
+                    <Button Text="9" Grid.Row="4" Grid.Column="2" Clicked="ButtonClicked"/>  
+                    <Button Text="0" Grid.Row="5" Grid.Column="0" Clicked="ButtonClicked" Grid.ColumnSpan="2"/>  
+                    <Button Text="+" Grid.Row="2" Grid.Column="3" Clicked="ButtonClicked"/>  
+                    <Button Text="-" Grid.Row="3" Grid.Column="3" Clicked="ButtonClicked"/>  
+                    <Button Text="/" Grid.Row="4" Grid.Column="3" Clicked="ButtonClicked"/>  
+                    <Button Text="*" Grid.Row="5" Grid.Column="3" Clicked="ButtonClicked"/>  
+                    <Button Text="=" Grid.Row="5" Grid.Column="5" Clicked="ButtonClicked"/>  
+                    <Button Text="." Grid.Row="5" Grid.Column="2" Clicked="ButtonClicked"/>  
+
+                    
+                    
+            </Grid>
+
+
+</ContentPage>
