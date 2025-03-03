@@ -3,7 +3,6 @@ bin/
 obj/
 Platforms/
 Properties/
-Resources/
 
 # Ignore user-specific files
 .vscode/
