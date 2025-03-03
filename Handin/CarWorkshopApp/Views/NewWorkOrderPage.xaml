@@ -1,0 +1,64 @@
+<!-- Views/NewWorkOrderPage.xaml -->
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarWorkshopApp.Views.NewWorkOrderPage"
+             xmlns:viewModels="clr-namespace:CarWorkshopApp.ViewModels"
+             x:DataType="viewModels:NewWorkOrderViewModel"
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Margin" Value="0,5,0,0" />
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="Margin" Value="0,0,0,10" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#3498db" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Margin" Value="0,20,0,0" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="CornerRadius" Value="5" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Label Text="Customer Information" FontSize="20" FontAttributes="Bold" Margin="0,0,0,10" />
+            
+            <Label Text="Name" />
+            <Entry Text="{Binding CustomerName}" Placeholder="Enter customer name" />
+            
+            <Label Text="Address" />
+            <Entry Text="{Binding CustomerAddress}" Placeholder="Enter customer address" />
+            
+            <Label Text="Vehicle Information" FontSize="20" FontAttributes="Bold" Margin="0,10,0,10" />
+            
+            <Label Text="Make" />
+            <Entry Text="{Binding VehicleMake}" Placeholder="Enter vehicle make" />
+            
+            <Label Text="Model" />
+            <Entry Text="{Binding VehicleModel}" Placeholder="Enter vehicle model" />
+            
+            <Label Text="Registration Number" />
+            <Entry Text="{Binding RegistrationNumber}" Placeholder="Enter registration number" />
+            
+            <Label Text="Delivery Information" FontSize="20" FontAttributes="Bold" Margin="0,10,0,10" />
+            
+            <Label Text="Date" />
+            <DatePicker Date="{Binding DeliveryDate}" />
+            
+            <Label Text="Time" />
+            <TimePicker Time="{Binding DeliveryTime}" />
+            
+            <Label Text="Work Description" />
+            <Editor Text="{Binding WorkDescription}" Placeholder="Enter work description" 
+                    HeightRequest="100" AutoSize="TextChanges" />
+            
+            <Button Text="Save Work Order" Command="{Binding SaveWorkOrderCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

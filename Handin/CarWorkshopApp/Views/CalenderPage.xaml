@@ -1,0 +1,58 @@
+<!-- Views/CalendarPage.xaml -->
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CarWorkshopApp.Views.CalendarPage"
+             xmlns:viewModels="clr-namespace:CarWorkshopApp.ViewModels"
+             x:DataType="viewModels:CalendarViewModel"
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Frame">
+                <Setter Property="CornerRadius" Value="5" />
+                <Setter Property="BorderColor" Value="#e0e0e0" />
+                <Setter Property="Margin" Value="0,5,0,5" />
+                <Setter Property="Padding" Value="10" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <Grid RowDefinitions="Auto,*" Padding="20">
+        <VerticalStackLayout Grid.Row="0">
+            <Label Text="Select Date" FontSize="16" Margin="0,0,0,5" />
+            <DatePicker Date="{Binding SelectedDate}" 
+                        DateSelected="OnDateSelected" 
+                        MaximumDate="{Binding Source={x:Static system:DateTime.Now}, Path=AddYears(1)}"
+                        MinimumDate="{Binding Source={x:Static system:DateTime.Now}, Path=AddYears(-1)}"
+                        Format="D" />
+        </VerticalStackLayout>
+        
+        <ScrollView Grid.Row="1" Margin="0,20,0,0">
+            <VerticalStackLayout>
+                <Label Text="Work Orders" FontSize="20" FontAttributes="Bold" Margin="0,0,0,10" />
+                
+                <CollectionView ItemsSource="{Binding WorkOrders}"
+                                SelectionMode="Single"
+                                SelectionChanged="OnWorkOrderSelected"
+                                EmptyView="No work orders for this date">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="viewModels:WorkOrderViewModel">
+                            <Frame>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <VerticalStackLayout Grid.Column="0">
+                                        <Label Text="{Binding CustomerName}" FontSize="18" FontAttributes="Bold" />
+                                        <Label Text="{Binding VehicleMake, StringFormat='{0} {1} ({2})', Binding.VehicleModel, Binding.RegistrationNumber}" />
+                                        <Label Text="{Binding DeliveryTime, StringFormat='Time: {0:hh\\:mm}'}" />
+                                        <Label Text="{Binding WorkDescription}" LineBreakMode="TailTruncation" MaxLines="2" />
+                                    </VerticalStackLayout>
+                                    <Image Grid.Column="1" VerticalOptions="Center" 
+                                           Source="arrow_right.png" HeightRequest="24" WidthRequest="24" />
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
