@@ -26405,11 +26405,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jeppe\\skole\\4.sem\\git\\CarWorkshopAwesomeApp\\CarWorkshopAwesomeApp.csproj",
+      "projectUniqueName": "C:\\Users\\jeppe\\skole\\4.sem\\git\\FED\\CarWorkshopAwesomeApp\\CarWorkshopAwesomeApp.csproj",
       "projectName": "CarWorkshopAwesomeApp",
-      "projectPath": "C:\\Users\\jeppe\\skole\\4.sem\\git\\CarWorkshopAwesomeApp\\CarWorkshopAwesomeApp.csproj",
+      "projectPath": "C:\\Users\\jeppe\\skole\\4.sem\\git\\FED\\CarWorkshopAwesomeApp\\CarWorkshopAwesomeApp.csproj",
       "packagesPath": "C:\\Users\\jeppe\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jeppe\\skole\\4.sem\\git\\CarWorkshopAwesomeApp\\obj\\",
+      "outputPath": "C:\\Users\\jeppe\\skole\\4.sem\\git\\FED\\CarWorkshopAwesomeApp\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "configFilePaths": [

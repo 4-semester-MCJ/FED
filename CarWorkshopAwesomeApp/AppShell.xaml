@@ -5,9 +5,13 @@
     xmlns:views="clr-namespace:CarWorkshopAwesomeApp.Views"
     x:Class="CarWorkshopAwesomeApp.AppShell">
     
-    <TabBar>
-        <ShellContent Title="Home" ContentTemplate="{DataTemplate views:MainPage}" />
-        <ShellContent Title="Book Task" ContentTemplate="{DataTemplate views:TaskBookingPage}" />
-    </TabBar>
+<TabBar>
+    <ShellContent Title="Home" ContentTemplate="{DataTemplate views:MainPage}" />
+    <ShellContent Title="Book Task" ContentTemplate="{DataTemplate views:TaskBookingPage}" />
+    <ShellContent Title="Task Overview" ContentTemplate="{DataTemplate views:TaskOverviewPage}" />
+    <ShellContent Title="Invoice" ContentTemplate="{DataTemplate views:InvoicePage}" />
+</TabBar>
+
+
 
 </Shell>

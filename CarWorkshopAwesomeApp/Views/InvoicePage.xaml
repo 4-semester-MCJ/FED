@@ -1,0 +1,40 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CarWorkshopAwesomeApp.ViewModels"
+             x:Class="CarWorkshopAwesomeApp.Views.InvoicePage">
+
+    <ContentPage.BindingContext>
+        <vm:InvoiceViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20">
+            <Label Text="Invoice Registration" FontSize="24" HorizontalOptions="Center"/>
+
+            <Entry Placeholder="Mechanic Name" Text="{Binding MechanicName}" />
+
+            <Entry Placeholder="Hours Worked" Text="{Binding HoursWorked}" Keyboard="Numeric"/>
+            <Entry Placeholder="Hourly Rate" Text="{Binding HourlyRate}" Keyboard="Numeric"/>
+
+            <Label Text="Materials Used:" FontSize="18"/>
+
+            <ListView ItemsSource="{Binding Materials}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <HorizontalStackLayout Spacing="10">
+                                <Entry Placeholder="Material Name" Text="{Binding Name}" WidthRequest="150"/>
+                                <Entry Placeholder="Price" Text="{Binding Price}" Keyboard="Numeric" WidthRequest="80"/>
+                                <Button Text="❌" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:InvoiceViewModel}}, Path=RemoveMaterialCommand}" CommandParameter="{Binding}"/>
+                            </HorizontalStackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Text="Add Material" Command="{Binding AddMaterialCommand}" />
+
+            <Label Text="{Binding TotalCost, StringFormat='Total Cost: {0:C}'}" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

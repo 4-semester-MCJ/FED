@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yf2X9Myu9C4=",
+  "dgSpecHash": "eJqjHAo06oA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\jeppe\\skole\\4.sem\\git\\CarWorkshopAwesomeApp\\CarWorkshopAwesomeApp.csproj",
+  "projectFilePath": "C:\\Users\\jeppe\\skole\\4.sem\\git\\FED\\CarWorkshopAwesomeApp\\CarWorkshopAwesomeApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jeppe\\.nuget\\packages\\googlegson\\2.11.0.3\\googlegson.2.11.0.3.nupkg.sha512",
     "C:\\Users\\jeppe\\.nuget\\packages\\microsoft.extensions.configuration\\9.0.0\\microsoft.extensions.configuration.9.0.0.nupkg.sha512",
