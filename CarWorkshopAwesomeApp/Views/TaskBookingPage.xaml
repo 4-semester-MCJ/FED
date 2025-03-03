@@ -1,0 +1,26 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CarWorkshopAwesomeApp.ViewModels"
+             x:Class="CarWorkshopAwesomeApp.Views.TaskBookingPage">
+    
+    <ContentPage.BindingContext>
+        <vm:TaskBookingViewModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Label Text="Book a New Task" FontSize="24" HorizontalOptions="Center"/>
+
+            <Entry Placeholder="Customer Name" Text="{Binding CustomerName}"/>
+            <Entry Placeholder="Customer Address" Text="{Binding CustomerAddress}"/>
+            <Entry Placeholder="Car Make" Text="{Binding CarMake}"/>
+            <Entry Placeholder="Car Model" Text="{Binding CarModel}"/>
+            <Entry Placeholder="Registration Number" Text="{Binding RegistrationNumber}"/>
+            
+            <DatePicker Date="{Binding HandoverDate}"/>
+            <Editor Placeholder="Task Description" HeightRequest="100" Text="{Binding TaskDescription}"/>
+
+            <Button Text="Book Task" Command="{Binding BookTaskCommand}" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
