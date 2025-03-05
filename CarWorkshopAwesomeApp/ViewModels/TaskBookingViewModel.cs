@@ -1,3 +1,4 @@
+using CarWorkshopAwesomeApp.Models;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -5,55 +6,52 @@ namespace CarWorkshopAwesomeApp.ViewModels;
 
 public class TaskBookingViewModel : INotifyPropertyChanged
 {
-    private string _customerName;
-    private string _customerAddress;
-    private string _carMake;
-    private string _carModel;
-    private string _registrationNumber;
-    private DateTime _handoverDate = DateTime.Now;
-    private string _taskDescription;
+    private Customer _customer = new Customer();
+    private Car _car = new Car();
+    private Service _service = new Service();
 
-    public string CustomerName
+    public string? CustomerName
     {
-        get => _customerName;
-        set { _customerName = value; OnPropertyChanged(); }
+        get => _customer.Name;
+        set { _customer.Name = value; OnPropertyChanged(); }
     }
 
-    public string CustomerAddress
+    public string? CustomerAddress
     {
-        get => _customerAddress;
-        set { _customerAddress = value; OnPropertyChanged(); }
+        get => _customer.Address;
+        set { _customer.Address = value; OnPropertyChanged(); }
     }
 
-    public string CarMake
+    public string? CarMake
     {
-        get => _carMake;
-        set { _carMake = value; OnPropertyChanged(); }
+        get => _car.Make;
+        set { _car.Make = value; OnPropertyChanged(); }
     }
 
-    public string CarModel
+    public string? CarModel
     {
-        get => _carModel;
-        set { _carModel = value; OnPropertyChanged(); }
+        get => _car.Model;
+        set { _car.Model = value; OnPropertyChanged(); }
     }
 
-    public string RegistrationNumber
+    public string? RegistrationNumber
     {
-        get => _registrationNumber;
-        set { _registrationNumber = value; OnPropertyChanged(); }
+        get => _car.RegistrationNumber;
+        set { _car.RegistrationNumber = value; OnPropertyChanged(); }
+    }
+
+    public string? TaskDescription
+    {
+        get => _service.TaskDescription;
+        set { _service.TaskDescription = value; OnPropertyChanged(); }
     }
 
     public DateTime HandoverDate
     {
-        get => _handoverDate;
-        set { _handoverDate = value; OnPropertyChanged(); }
+        get => _service.HandoverDate;
+        set { _service.HandoverDate = value; OnPropertyChanged(); }
     }
 
-    public string TaskDescription
-    {
-        get => _taskDescription;
-        set { _taskDescription = value; OnPropertyChanged(); }
-    }
 
     public Command BookTaskCommand { get; }
 
@@ -69,7 +67,7 @@ public class TaskBookingViewModel : INotifyPropertyChanged
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
-    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
