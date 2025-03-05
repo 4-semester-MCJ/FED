@@ -1,8 +1,9 @@
-namespace CarWorkshopAwesomeApp.Models
+using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace CarWorkshopAwesomeApp.Models;
+
+public partial class Service : ObservableObject
 {
-    public class Service
-    {
-        public string? TaskDescription { get; set; }
-        public DateTime HandoverDate { get; set; }
-    }
+    [ObservableProperty]
+    private string taskDescription;
 }

@@ -1,9 +1,15 @@
-namespace CarWorkshopAwesomeApp.ViewModels
+using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace CarWorkshopAwesomeApp.Models;
+
+public partial class Car : ObservableObject
 {
-    public class Car
-    {
-        public string? Make { get; set; }
-        public string? Model { get; set; }
-        public string? RegistrationNumber { get; set; }
-    }
+    [ObservableProperty]
+    private string make;
+
+    [ObservableProperty]
+    private string model;
+
+    [ObservableProperty]
+    private string registrationNumber;
 }

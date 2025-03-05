@@ -1,8 +1,12 @@
-namespace CarWorkshopAwesomeApp.Models
+using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace CarWorkshopAwesomeApp.Models;
+
+public partial class Customer : ObservableObject
 {
-    public class Customer
-    {
-        public string? Name { get; set; }
-        public string? Address { get; set; }
-    }
+    [ObservableProperty]
+    private string name;
+
+    [ObservableProperty]
+    private string address;
 }

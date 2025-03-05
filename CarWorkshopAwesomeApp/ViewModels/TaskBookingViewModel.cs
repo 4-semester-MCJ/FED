@@ -1,74 +1,45 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using CarWorkshopAwesomeApp.Models;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace CarWorkshopAwesomeApp.ViewModels;
 
-public class TaskBookingViewModel : INotifyPropertyChanged
+public partial class TaskBookingViewModel : ObservableObject
 {
-    private Customer _customer = new Customer();
-    private Car _car = new Car();
-    private Service _service = new Service();
-
-    public string? CustomerName
-    {
-        get => _customer.Name;
-        set { _customer.Name = value; OnPropertyChanged(); }
-    }
-
-    public string? CustomerAddress
-    {
-        get => _customer.Address;
-        set { _customer.Address = value; OnPropertyChanged(); }
-    }
-
-    public string? CarMake
-    {
-        get => _car.Make;
-        set { _car.Make = value; OnPropertyChanged(); }
-    }
-
-    public string? CarModel
-    {
-        get => _car.Model;
-        set { _car.Model = value; OnPropertyChanged(); }
-    }
-
-    public string? RegistrationNumber
-    {
-        get => _car.RegistrationNumber;
-        set { _car.RegistrationNumber = value; OnPropertyChanged(); }
-    }
-
-    public string? TaskDescription
-    {
-        get => _service.TaskDescription;
-        set { _service.TaskDescription = value; OnPropertyChanged(); }
-    }
-
-    public DateTime HandoverDate
-    {
-        get => _service.HandoverDate;
-        set { _service.HandoverDate = value; OnPropertyChanged(); }
-    }
-
-
-    public Command BookTaskCommand { get; }
+    private Customer _customer;
+    private Car _car;
+    private Service _service;
 
     public TaskBookingViewModel()
     {
+        Customer = new Customer();
+        Car = new Car();
+        Service = new Service();
         BookTaskCommand = new Command(BookTask);
     }
 
-    private void BookTask()
+    public Customer Customer
     {
-        // Simulate saving task (you can extend this to save to a database)
-        Console.WriteLine($"Task booked: {CustomerName}, {CarMake} {CarModel}, {RegistrationNumber}");
+        get => _customer;
+        set => SetProperty(ref _customer, value);
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    public Car Car
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        get => _car;
+        set => SetProperty(ref _car, value);
+    }
+
+    public Service Service
+    {
+        get => _service;
+        set => SetProperty(ref _service, value);
+    }
+
+    public ICommand BookTaskCommand { get; }
+
+    private void BookTask()
+    {
+        Console.WriteLine($"Task booked: {Customer.Name}, {Car.Make} {Car.Model}, {Car.RegistrationNumber}");
     }
 }
