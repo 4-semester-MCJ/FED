@@ -453,8 +453,8 @@
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="HorizontalOptions" Value="Center"/>
         <Setter Property="VerticalOptions" Value="Center"/>
-        <Setter Property="FontAttributes" Value="Bold"/>  <!-- Corrected this line -->
-        <Setter Property="TextColor" Value="#008000"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="TextColor" Value="Pink"/> <!-- Using our Custom defined color -->
     </Style>
 
 </ResourceDictionary>
