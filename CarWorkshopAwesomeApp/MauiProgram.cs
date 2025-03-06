@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using CarWorkshopAwesomeApp;  // ✅ Ensure this is included
+using CarWorkshopAwesomeApp;
 using CarWorkshopAwesomeApp.Services;
 using CarWorkshopAwesomeApp.ViewModels;
 using CarWorkshopAwesomeApp.Views;
@@ -10,11 +10,11 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
-        builder.UseMauiApp<App>();  // ✅ Now App is recognized
+        builder.UseMauiApp<App>(); 
 
-        // ✅ Ensure the database is created in the correct location
+        // Register Services
         string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CarWorkshop.db");
-        Console.WriteLine($"🗂️ Corrected Database Path: {dbPath}");
+        Console.WriteLine($"Corrected Database Path: {dbPath}");
 
         builder.Services.AddSingleton<DatabaseService>(provider => new DatabaseService(dbPath));
 
