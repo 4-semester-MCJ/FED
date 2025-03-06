@@ -7,10 +7,10 @@
         <vm:InvoiceViewModel />
     </ContentPage.BindingContext>
 
-    <VerticalStackLayout Padding="20" Spacing="15">
+<VerticalStackLayout Padding="20" Spacing="15">
+    <!-- This Is our custom Style: -->
+    <Label Text="Invoice Registration" Style="{StaticResource LabelStyle}"/>
 
-        <!-- Centered Title -->
-        <Label Text="Invoice Registration" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center"/>
 
         <!-- Two Side-by-Side Boxes: Inputs & BOM -->
         <Grid ColumnDefinitions="1*, 1*" ColumnSpacing="20">

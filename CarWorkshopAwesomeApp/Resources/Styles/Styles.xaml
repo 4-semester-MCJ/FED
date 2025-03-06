@@ -448,4 +448,13 @@
         <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
+    <!-- This is our custom Style used on Invoice Registration-->
+    <Style x:Key="LabelStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="FontAttributes" Value="Bold"/>  <!-- Corrected this line -->
+        <Setter Property="TextColor" Value="#008000"/>
+    </Style>
+
 </ResourceDictionary>
