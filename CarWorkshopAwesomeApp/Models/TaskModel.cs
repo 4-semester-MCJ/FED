@@ -13,17 +13,17 @@ namespace CarWorkshopAwesomeApp.Models
         public string CarModel { get; set; }
         public string RegistrationNumber { get; set; }
 
-        [Column("HandoverDateString")]  // ✅ Make sure this matches exactly
-        public string HandoverDateString { get; set; } // ✅ This must exist in SQLite
+        [Column("HandoverDateString")]  // Make sure this matches exactly
+        public string HandoverDateString { get; set; } // This must exist in SQLite
 
         public string TaskDescription { get; set; }
 
-        // ✅ Helper property for working with DateTime
+        // Helper property for working with DateTime
         [Ignore]
         public DateTime HandoverDate
         {
             get => DateTime.Parse(HandoverDateString);
-            set => HandoverDateString = value.ToString("yyyy-MM-dd");  // ✅ Store only YYYY-MM-DD
+            set => HandoverDateString = value.ToString("yyyy-MM-dd");  // Store only YYYY-MM-DD
         }
     }
 }

@@ -92,24 +92,22 @@ namespace CarWorkshopAwesomeApp.ViewModels
 
         public ICommand SaveTaskCommand { get; }
 
-        // ✅ Constructor for XAML binding (No parameter)
+        // Constructor for XAML binding (No parameter)
         public TaskBookingViewModel() : this(new DatabaseService(
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CarWorkshop.db")))
         {
         }
 
-        // ✅ Constructor with DatabaseService parameter (For DI)
+        // Constructor with DatabaseService parameter (For DI)
         public TaskBookingViewModel(DatabaseService databaseService)
         {
             _databaseService = databaseService ?? throw new ArgumentNullException(nameof(databaseService));
             SaveTaskCommand = new Command(async () => await SaveTaskAsync());
         }
 
-        // ✅ Save task function
+        // Save task function
         public async Task SaveTaskAsync()
         {
-            Console.WriteLine($"Saving task with HandoverDate: {HandoverDate}");
-
             var newTask = new TaskModel
             {
                 CustomerName = CustomerName,
@@ -117,7 +115,7 @@ namespace CarWorkshopAwesomeApp.ViewModels
                 CarMake = CarMake,
                 CarModel = CarModel,
                 RegistrationNumber = RegistrationNumber,
-                HandoverDate = HandoverDate.Date,  // ✅ Ensure only the date is saved
+                HandoverDate = HandoverDate.Date,  // Ensure only the date is saved
                 TaskDescription = TaskDescription
             };
 
@@ -127,14 +125,14 @@ namespace CarWorkshopAwesomeApp.ViewModels
 
                 if (rowsAffected > 0)
                 {
-                    Console.WriteLine("✅ Task saved successfully");
+                    // Task saved successfully
                 }
                 else
                 {
-                    Console.WriteLine("⚠️ Task was NOT saved!");
+                    // Task was NOT saved!
                 }
 
-                // ✅ Reset fields after saving
+                // Reset fields after saving
                 CustomerName = string.Empty;
                 CustomerAddress = string.Empty;
                 CarMake = string.Empty;
@@ -145,11 +143,11 @@ namespace CarWorkshopAwesomeApp.ViewModels
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ Error saving task: {ex.Message}");
+                // Error saving task
             }
         }
 
-        // ✅ PropertyChanged Implementation (For MVVM Binding)
+        // PropertyChanged Implementation (For MVVM Binding)
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
