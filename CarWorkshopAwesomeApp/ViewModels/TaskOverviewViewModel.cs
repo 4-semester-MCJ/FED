@@ -23,8 +23,13 @@ public class TaskOverviewViewModel : INotifyPropertyChanged
             OnPropertyChanged();
             LoadTasksForDate();
         }
+    } 
+    // Parameterless constructor for XAML
+    public TaskOverviewViewModel()
+    {
     }
 
+    // Constructor with DatabaseService parameter for DI
     public TaskOverviewViewModel(DatabaseService databaseService)
     {
         _databaseService = databaseService;
@@ -34,17 +39,24 @@ public class TaskOverviewViewModel : INotifyPropertyChanged
 
     private async void LoadTasksForDate()
     {
-        var tasksForDate = await _databaseService.GetTasksByDateAsync(SelectedDate);
-
-        Tasks.Clear();
-        foreach (var task in tasksForDate)
+        try 
         {
-            Tasks.Add(task);
+            var tasksForDate = await _databaseService.GetTasksByDateAsync(SelectedDate);
+
+            Tasks.Clear();
+            foreach (var task in tasksForDate)
+            {
+                Tasks.Add(task);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
-    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

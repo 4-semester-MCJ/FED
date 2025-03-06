@@ -63,6 +63,13 @@ public class TaskBookingViewModel : INotifyPropertyChanged
 
     public ICommand SaveTaskCommand { get; }
 
+    
+    // Parameterless constructor for XAML
+    public TaskBookingViewModel()
+    {
+    }
+
+    // Constructor with DatabaseService parameter for DI
     public TaskBookingViewModel(DatabaseService databaseService)
     {
         _databaseService = databaseService;

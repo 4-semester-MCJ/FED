@@ -15,7 +15,7 @@
         <ListView ItemsSource="{Binding FilteredTasks}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding .}" />
+                    <TextCell Text="{Binding TaskDescription}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
