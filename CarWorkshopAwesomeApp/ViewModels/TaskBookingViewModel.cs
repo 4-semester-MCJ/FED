@@ -22,50 +22,77 @@ public class TaskBookingViewModel : INotifyPropertyChanged
     public string CustomerName
     {
         get => _customerName;
-        set { _customerName = value; OnPropertyChanged(); }
+        set
+        {
+            _customerName = value;
+            OnPropertyChanged();
+        }
     }
 
     public string CustomerAddress
     {
         get => _customerAddress;
-        set { _customerAddress = value; OnPropertyChanged(); }
+        set
+        {
+            _customerAddress = value;
+            OnPropertyChanged();
+        }
     }
 
     public string CarMake
     {
         get => _carMake;
-        set { _carMake = value; OnPropertyChanged(); }
+        set
+        {
+            _carMake = value;
+            OnPropertyChanged();
+        }
     }
 
     public string CarModel
     {
         get => _carModel;
-        set { _carModel = value; OnPropertyChanged(); }
+        set
+        {
+            _carModel = value;
+            OnPropertyChanged();
+        }
     }
 
     public string RegistrationNumber
     {
         get => _registrationNumber;
-        set { _registrationNumber = value; OnPropertyChanged(); }
+        set
+        {
+            _registrationNumber = value;
+            OnPropertyChanged();
+        }
     }
 
     public DateTime HandoverDate
     {
         get => _handoverDate;
-        set { _handoverDate = value; OnPropertyChanged(); }
+        set
+        {
+            _handoverDate = value;
+            OnPropertyChanged();
+        }
     }
 
     public string TaskDescription
     {
         get => _taskDescription;
-        set { _taskDescription = value; OnPropertyChanged(); }
+        set
+        {
+            _taskDescription = value;
+            OnPropertyChanged();
+        }
     }
 
     public ICommand SaveTaskCommand { get; }
 
-    
     // Parameterless constructor for XAML
-    public TaskBookingViewModel()
+    public TaskBookingViewModel() : this(new DatabaseService("path_to_your_database"))
     {
     }
 
@@ -78,7 +105,9 @@ public class TaskBookingViewModel : INotifyPropertyChanged
 
     private async Task SaveTaskAsync()
     {
-        var newTask = new TaskModel
+        Console.WriteLine("SaveTaskAsync called");
+
+        var task = new TaskModel
         {
             CustomerName = CustomerName,
             CustomerAddress = CustomerAddress,
@@ -89,11 +118,31 @@ public class TaskBookingViewModel : INotifyPropertyChanged
             TaskDescription = TaskDescription
         };
 
-        await _databaseService.SaveTaskAsync(newTask);
+        try
+        {
+            await _databaseService.SaveTaskAsync(task);
+            Console.WriteLine("Task saved successfully");
+
+            // Reset fields
+            CustomerName = string.Empty;
+            CustomerAddress = string.Empty;
+            CarMake = string.Empty;
+            CarModel = string.Empty;
+            RegistrationNumber = string.Empty;
+            HandoverDate = DateTime.Now;
+            TaskDescription = string.Empty;
+
+            // Show confirmation message
+            await Application.Current.MainPage.DisplayAlert("Success", "Task booked successfully", "OK");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving task: {ex.Message}");
+        }
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
-    private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }

@@ -22,13 +22,11 @@ public class DatabaseService
 
     public async Task<List<TaskModel>> GetTasksByDateAsync(DateTime date)
     {
-        return await _context.Tasks
-                .Where(t => t.HandoverDate.Date == date.Date)
-                .ToListAsync();
-
-        // return _database.Table<TaskModel>()
-        //     .Where(t => t.HandoverDate.Date == date.Date)
-        //     .ToListAsync();
+        return await _database.Table<TaskModel>()
+            .Where(t => t.HandoverDate.Year == date.Year &&
+                        t.HandoverDate.Month == date.Month &&
+                        t.HandoverDate.Day == date.Day)
+            .ToListAsync();
     }
 
     public Task<int> SaveTaskAsync(TaskModel task)
