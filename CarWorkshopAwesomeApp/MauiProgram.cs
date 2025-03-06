@@ -1,24 +1,16 @@
-﻿using Microsoft.Extensions.Logging;
-
-namespace CarWorkshopAwesomeApp;
+﻿using CarWorkshopAwesomeApp.Services;
+using System.IO;
 
 public static class MauiProgram
 {
-	public static MauiApp CreateMauiApp()
-	{
-		var builder = MauiApp.CreateBuilder();
-		builder
-			.UseMauiApp<App>()
-			.ConfigureFonts(fonts =>
-			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			});
+    public static MauiApp CreateMauiApp()
+    {
+        var builder = MauiApp.CreateBuilder();
+        builder.UseMauiApp<App>();
 
-#if DEBUG
-		builder.Logging.AddDebug();
-#endif
+        string dbPath = Path.Combine(FileSystem.AppDataDirectory, "CarWorkshop.db");
+        builder.Services.AddSingleton(new DatabaseService(dbPath));
 
-		return builder.Build();
-	}
+        return builder.Build();
+    }
 }

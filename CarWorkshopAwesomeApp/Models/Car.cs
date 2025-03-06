@@ -5,11 +5,11 @@ namespace CarWorkshopAwesomeApp.Models;
 public partial class Car : ObservableObject
 {
     [ObservableProperty]
-    private string make;
+    private string? make;
 
     [ObservableProperty]
-    private string model;
+    private string? model;
 
     [ObservableProperty]
-    private string registrationNumber;
+    private string? registrationNumber;
 }

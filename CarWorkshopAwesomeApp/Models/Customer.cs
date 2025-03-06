@@ -5,8 +5,8 @@ namespace CarWorkshopAwesomeApp.Models;
 public partial class Customer : ObservableObject
 {
     [ObservableProperty]
-    private string name;
+    private string? _name;
 
     [ObservableProperty]
-    private string address;
+    private string? _address;
 }

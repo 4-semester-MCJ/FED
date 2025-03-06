@@ -6,4 +6,7 @@ public partial class Service : ObservableObject
 {
     [ObservableProperty]
     private string taskDescription;
+
+    [ObservableProperty]
+    public DateTime HandoverDate { get; set; }
 }
