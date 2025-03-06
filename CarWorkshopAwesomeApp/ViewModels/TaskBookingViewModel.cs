@@ -1,149 +1,159 @@
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using CarWorkshopAwesomeApp.Models;
-using CarWorkshopAwesomeApp.Services;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System;
+using CarWorkshopAwesomeApp.Models;
+using CarWorkshopAwesomeApp.Services;
+using Microsoft.Maui.Controls;
 
-namespace CarWorkshopAwesomeApp.ViewModels;
-
-public class TaskBookingViewModel : INotifyPropertyChanged
+namespace CarWorkshopAwesomeApp.ViewModels
 {
-    private string _customerName;
-    private string _customerAddress;
-    private string _carMake;
-    private string _carModel;
-    private string _registrationNumber;
-    private DateTime _handoverDate = DateTime.Now;
-    private string _taskDescription;
-    private readonly DatabaseService _databaseService;
-
-    public string CustomerName
+    public class TaskBookingViewModel : INotifyPropertyChanged
     {
-        get => _customerName;
-        set
+        private string _customerName;
+        private string _customerAddress;
+        private string _carMake;
+        private string _carModel;
+        private string _registrationNumber;
+        private DateTime _handoverDate = DateTime.Now;
+        private string _taskDescription;
+        private readonly DatabaseService _databaseService;
+
+        public string CustomerName
         {
-            _customerName = value;
-            OnPropertyChanged();
+            get => _customerName;
+            set
+            {
+                _customerName = value;
+                OnPropertyChanged();
+            }
         }
-    }
 
-    public string CustomerAddress
-    {
-        get => _customerAddress;
-        set
+        public string CustomerAddress
         {
-            _customerAddress = value;
-            OnPropertyChanged();
+            get => _customerAddress;
+            set
+            {
+                _customerAddress = value;
+                OnPropertyChanged();
+            }
         }
-    }
 
-    public string CarMake
-    {
-        get => _carMake;
-        set
+        public string CarMake
         {
-            _carMake = value;
-            OnPropertyChanged();
+            get => _carMake;
+            set
+            {
+                _carMake = value;
+                OnPropertyChanged();
+            }
         }
-    }
 
-    public string CarModel
-    {
-        get => _carModel;
-        set
+        public string CarModel
         {
-            _carModel = value;
-            OnPropertyChanged();
+            get => _carModel;
+            set
+            {
+                _carModel = value;
+                OnPropertyChanged();
+            }
         }
-    }
 
-    public string RegistrationNumber
-    {
-        get => _registrationNumber;
-        set
+        public string RegistrationNumber
         {
-            _registrationNumber = value;
-            OnPropertyChanged();
+            get => _registrationNumber;
+            set
+            {
+                _registrationNumber = value;
+                OnPropertyChanged();
+            }
         }
-    }
 
-    public DateTime HandoverDate
-    {
-        get => _handoverDate;
-        set
+        public DateTime HandoverDate
         {
-            _handoverDate = value;
-            OnPropertyChanged();
+            get => _handoverDate;
+            set
+            {
+                _handoverDate = value;
+                OnPropertyChanged();
+            }
         }
-    }
 
-    public string TaskDescription
-    {
-        get => _taskDescription;
-        set
+        public string TaskDescription
         {
-            _taskDescription = value;
-            OnPropertyChanged();
+            get => _taskDescription;
+            set
+            {
+                _taskDescription = value;
+                OnPropertyChanged();
+            }
         }
-    }
 
-    public ICommand SaveTaskCommand { get; }
+        public ICommand SaveTaskCommand { get; }
 
-    // Parameterless constructor for XAML
-    public TaskBookingViewModel() : this(new DatabaseService("path_to_your_database"))
-    {
-    }
-
-    // Constructor with DatabaseService parameter for DI
-    public TaskBookingViewModel(DatabaseService databaseService)
-    {
-        _databaseService = databaseService;
-        SaveTaskCommand = new Command(async () => await SaveTaskAsync());
-    }
-
-    private async Task SaveTaskAsync()
-    {
-        Console.WriteLine("SaveTaskAsync called");
-
-        var task = new TaskModel
+        // ✅ Constructor for XAML binding (No parameter)
+        public TaskBookingViewModel() : this(new DatabaseService(
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CarWorkshop.db")))
         {
-            CustomerName = CustomerName,
-            CustomerAddress = CustomerAddress,
-            CarMake = CarMake,
-            CarModel = CarModel,
-            RegistrationNumber = RegistrationNumber,
-            HandoverDate = HandoverDate,
-            TaskDescription = TaskDescription
-        };
-
-        try
-        {
-            await _databaseService.SaveTaskAsync(task);
-            Console.WriteLine("Task saved successfully");
-
-            // Reset fields
-            CustomerName = string.Empty;
-            CustomerAddress = string.Empty;
-            CarMake = string.Empty;
-            CarModel = string.Empty;
-            RegistrationNumber = string.Empty;
-            HandoverDate = DateTime.Now;
-            TaskDescription = string.Empty;
-
-            // Show confirmation message
-            await Application.Current.MainPage.DisplayAlert("Success", "Task booked successfully", "OK");
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error saving task: {ex.Message}");
-        }
-    }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        // ✅ Constructor with DatabaseService parameter (For DI)
+        public TaskBookingViewModel(DatabaseService databaseService)
+        {
+            _databaseService = databaseService ?? throw new ArgumentNullException(nameof(databaseService));
+            SaveTaskCommand = new Command(async () => await SaveTaskAsync());
+        }
+
+        // ✅ Save task function
+        public async Task SaveTaskAsync()
+        {
+            Console.WriteLine($"Saving task with HandoverDate: {HandoverDate}");
+
+            var newTask = new TaskModel
+            {
+                CustomerName = CustomerName,
+                CustomerAddress = CustomerAddress,
+                CarMake = CarMake,
+                CarModel = CarModel,
+                RegistrationNumber = RegistrationNumber,
+                HandoverDate = HandoverDate.Date,  // ✅ Ensure only the date is saved
+                TaskDescription = TaskDescription
+            };
+
+            try
+            {
+                int rowsAffected = await _databaseService.SaveTaskAsync(newTask);
+
+                if (rowsAffected > 0)
+                {
+                    Console.WriteLine("✅ Task saved successfully");
+                }
+                else
+                {
+                    Console.WriteLine("⚠️ Task was NOT saved!");
+                }
+
+                // ✅ Reset fields after saving
+                CustomerName = string.Empty;
+                CustomerAddress = string.Empty;
+                CarMake = string.Empty;
+                CarModel = string.Empty;
+                RegistrationNumber = string.Empty;
+                HandoverDate = DateTime.Now;
+                TaskDescription = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Error saving task: {ex.Message}");
+            }
+        }
+
+        // ✅ PropertyChanged Implementation (For MVVM Binding)
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

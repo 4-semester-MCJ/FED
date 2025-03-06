@@ -1,16 +1,16 @@
 ﻿using CarWorkshopAwesomeApp.Views;
+using Microsoft.Maui.Controls;
+using System;
 
-namespace CarWorkshopAwesomeApp;
-
-public partial class App : Application
+namespace CarWorkshopAwesomeApp
 {
-    public App()
+    public partial class App : Application
     {
-        InitializeComponent();
-    }
+        public App(IServiceProvider serviceProvider)
+        {
+            InitializeComponent();
 
-    protected override Window CreateWindow(IActivationState activationState)
-    {
-        return new Window(new AppShell());
+            MainPage = new AppShell(serviceProvider);
+        }
     }
 }

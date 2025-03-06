@@ -1,57 +1,69 @@
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using CarWorkshopAwesomeApp.Models;
 using CarWorkshopAwesomeApp.Services;
-using System;
 
-namespace CarWorkshopAwesomeApp.ViewModels;
-
-public class TaskOverviewViewModel : INotifyPropertyChanged
+namespace CarWorkshopAwesomeApp.ViewModels
 {
-    private DateTime _selectedDate = DateTime.Now;
+    public class TaskOverviewViewModel : INotifyPropertyChanged
+{
+    private DateTime _selectedDate = DateTime.Now.Date;
     private readonly DatabaseService _databaseService;
-    public ObservableCollection<TaskModel> Tasks { get; set; }
+
+    public ObservableCollection<TaskModel> Tasks { get; set; } = new ObservableCollection<TaskModel>();
 
     public DateTime SelectedDate
     {
         get => _selectedDate;
         set
         {
-            _selectedDate = value;
+            _selectedDate = value.Date;
             OnPropertyChanged();
             LoadTasksForDate();
         }
-    } 
-    // Parameterless constructor for XAML
-    public TaskOverviewViewModel()
-    {
     }
 
-    // Constructor with DatabaseService parameter for DI
+      public TaskOverviewViewModel() 
+    {
+        // Initialize with default behavior, or leave it empty for XAML binding
+    }
+
     public TaskOverviewViewModel(DatabaseService databaseService)
     {
-        _databaseService = databaseService;
-        Tasks = new ObservableCollection<TaskModel>();
-        LoadTasksForDate();
+        _databaseService = databaseService ?? throw new ArgumentNullException(nameof(databaseService));
+        LoadTasksForDate(); 
     }
 
     private async void LoadTasksForDate()
     {
-        try 
-        {
-            var tasksForDate = await _databaseService.GetTasksByDateAsync(SelectedDate);
+        Console.WriteLine($"🔎 LoadTasksForDate() called for {SelectedDate:yyyy-MM-dd}");
 
-            Tasks.Clear();
-            foreach (var task in tasksForDate)
-            {
-                Tasks.Add(task);
-            }
-        }
-        catch (Exception ex)
+        if (_databaseService == null)
         {
-            Console.WriteLine(ex.Message);
+            Console.WriteLine("⚠️ DatabaseService is NULL in LoadTasksForDate!");
+            return;
+        }
+
+        Console.WriteLine($"🔎 Fetching tasks for date: {SelectedDate:yyyy-MM-dd}");
+        var tasks = await _databaseService.GetTasksByDateAsync(SelectedDate);
+
+        if (tasks == null || tasks.Count == 0)
+        {
+            Console.WriteLine($"⚠️ No tasks found for date: {SelectedDate:yyyy-MM-dd}");
+            Tasks.Clear();
+            return;
+        }
+
+        Console.WriteLine($"✅ Found {tasks.Count} tasks for {SelectedDate:yyyy-MM-dd}");
+
+        Tasks.Clear();
+        foreach (var task in tasks)
+        {
+            Console.WriteLine($"📌 Task: {task.Id} - {task.TaskDescription}, Date: {task.HandoverDateString}");
+            Tasks.Add(task);
         }
     }
 
@@ -60,4 +72,6 @@ public class TaskOverviewViewModel : INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+}
+
 }

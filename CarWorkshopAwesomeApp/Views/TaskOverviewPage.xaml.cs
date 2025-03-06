@@ -1,9 +1,14 @@
-namespace CarWorkshopAwesomeApp.Views;
+using CarWorkshopAwesomeApp.ViewModels;
+using Microsoft.Maui.Controls;
 
-public partial class TaskOverviewPage : ContentPage
+namespace CarWorkshopAwesomeApp.Views
 {
-    public TaskOverviewPage()
+    public partial class TaskOverviewPage : ContentPage
     {
-        InitializeComponent();
+        public TaskOverviewPage(TaskOverviewViewModel viewModel)
+        {
+            InitializeComponent();
+            BindingContext = viewModel; 
+        }
     }
 }
