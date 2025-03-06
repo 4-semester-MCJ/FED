@@ -105,7 +105,6 @@ namespace CarWorkshopAwesomeApp.ViewModels
             SaveTaskCommand = new Command(async () => await SaveTaskAsync());
         }
 
-        // Save task function
         public async Task SaveTaskAsync()
         {
             var newTask = new TaskModel
@@ -119,18 +118,7 @@ namespace CarWorkshopAwesomeApp.ViewModels
                 TaskDescription = TaskDescription
             };
 
-            try
-            {
                 int rowsAffected = await _databaseService.SaveTaskAsync(newTask);
-
-                if (rowsAffected > 0)
-                {
-                    // Task saved successfully
-                }
-                else
-                {
-                    // Task was NOT saved!
-                }
 
                 // Reset fields after saving
                 CustomerName = string.Empty;
@@ -141,11 +129,6 @@ namespace CarWorkshopAwesomeApp.ViewModels
                 HandoverDate = DateTime.Now;
                 TaskDescription = string.Empty;
             }
-            catch (Exception ex)
-            {
-                // Error saving task
-            }
-        }
 
         // PropertyChanged Implementation (For MVVM Binding)
         public event PropertyChangedEventHandler? PropertyChanged;

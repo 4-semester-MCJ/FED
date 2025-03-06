@@ -7,16 +7,16 @@ namespace CarWorkshopAwesomeApp.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public string CustomerName { get; set; }
-        public string CustomerAddress { get; set; }
-        public string CarMake { get; set; }
-        public string CarModel { get; set; }
-        public string RegistrationNumber { get; set; }
+        public string? CustomerName { get; set; }
+        public string? CustomerAddress { get; set; }
+        public string? CarMake { get; set; }
+        public string? CarModel { get; set; }
+        public string? RegistrationNumber { get; set; }
 
         [Column("HandoverDateString")]  // Make sure this matches exactly
-        public string HandoverDateString { get; set; } // This must exist in SQLite
+        public string? HandoverDateString { get; set; } // This must exist in SQLite
 
-        public string TaskDescription { get; set; }
+        public string? TaskDescription { get; set; }
 
         // Helper property for working with DateTime
         [Ignore]
