@@ -87,7 +87,7 @@
             <!-- "Materials Used" Title & Small Button -->
             <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
                 <Label Text="Materials Used:" FontSize="18" FontAttributes="Bold" VerticalTextAlignment="Center"/>
-                <Button Text="+" Command="{Binding AddMaterialCommand}" WidthRequest="30" HeightRequest="30" FontSize="16" CornerRadius="5" Padding="0"/>
+                <Button Text="+" Command="{Binding AddMaterialCommand}" Style="{StaticResource ButtonStyle}"/>
             </HorizontalStackLayout>
 
             <!-- Scrollable List of Materials -->

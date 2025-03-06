@@ -20,7 +20,7 @@
             <DatePicker Date="{Binding HandoverDate}"/>
             <Editor Placeholder="Task Description" HeightRequest="100" Text="{Binding TaskDescription}"/>
 
-            <Button Text="Book Task" Command="{Binding SaveTaskCommand}" BackgroundColor="Pink"/>
+            <Button Text="Book Task" Command="{Binding SaveTaskCommand}" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

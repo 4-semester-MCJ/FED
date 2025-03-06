@@ -19,8 +19,8 @@
     <Color x:Key="MidnightBlue">#190649</Color>
     <Color x:Key="OffBlack">#1f1f1f</Color>
     <!-- Custom Colors -->
-    <Color x:Key="Pink">#FF4081</Color>
-    <Color x:Key="Cyan">#00FFFF</Color>
+    <Color x:Key="AwesomePink">#FF4081</Color>
+    <Color x:Key="AwesomeCyan">#00FFFF</Color>
 
     <Color x:Key="Gray100">#E1E1E1</Color>
     <Color x:Key="Gray200">#C8C8C8</Color>
