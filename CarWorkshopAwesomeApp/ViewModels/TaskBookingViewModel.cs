@@ -1,45 +1,159 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using CarWorkshopAwesomeApp.Models;
+using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using CarWorkshopAwesomeApp.Models;
+using CarWorkshopAwesomeApp.Services;
+using Microsoft.Maui.Controls;
 
-namespace CarWorkshopAwesomeApp.ViewModels;
-
-public partial class TaskBookingViewModel : ObservableObject
+namespace CarWorkshopAwesomeApp.ViewModels
 {
-    private Customer _customer;
-    private Car _car;
-    private Service _service;
-
-    public TaskBookingViewModel()
+    public class TaskBookingViewModel : INotifyPropertyChanged
     {
-        Customer = new Customer();
-        Car = new Car();
-        Service = new Service();
-        BookTaskCommand = new Command(BookTask);
-    }
+        private string _customerName;
+        private string _customerAddress;
+        private string _carMake;
+        private string _carModel;
+        private string _registrationNumber;
+        private DateTime _handoverDate = DateTime.Now;
+        private string _taskDescription;
+        private readonly DatabaseService _databaseService;
 
-    public Customer Customer
-    {
-        get => _customer;
-        set => SetProperty(ref _customer, value);
-    }
+        public string CustomerName
+        {
+            get => _customerName;
+            set
+            {
+                _customerName = value;
+                OnPropertyChanged();
+            }
+        }
 
-    public Car Car
-    {
-        get => _car;
-        set => SetProperty(ref _car, value);
-    }
+        public string CustomerAddress
+        {
+            get => _customerAddress;
+            set
+            {
+                _customerAddress = value;
+                OnPropertyChanged();
+            }
+        }
 
-    public Service Service
-    {
-        get => _service;
-        set => SetProperty(ref _service, value);
-    }
+        public string CarMake
+        {
+            get => _carMake;
+            set
+            {
+                _carMake = value;
+                OnPropertyChanged();
+            }
+        }
 
-    public ICommand BookTaskCommand { get; }
+        public string CarModel
+        {
+            get => _carModel;
+            set
+            {
+                _carModel = value;
+                OnPropertyChanged();
+            }
+        }
 
-    private void BookTask()
-    {
-        Console.WriteLine($"Task booked: {Customer.Name}, {Car.Make} {Car.Model}, {Car.RegistrationNumber}");
+        public string RegistrationNumber
+        {
+            get => _registrationNumber;
+            set
+            {
+                _registrationNumber = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime HandoverDate
+        {
+            get => _handoverDate;
+            set
+            {
+                _handoverDate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string TaskDescription
+        {
+            get => _taskDescription;
+            set
+            {
+                _taskDescription = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand SaveTaskCommand { get; }
+
+        // ✅ Constructor for XAML binding (No parameter)
+        public TaskBookingViewModel() : this(new DatabaseService(
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CarWorkshop.db")))
+        {
+        }
+
+        // ✅ Constructor with DatabaseService parameter (For DI)
+        public TaskBookingViewModel(DatabaseService databaseService)
+        {
+            _databaseService = databaseService ?? throw new ArgumentNullException(nameof(databaseService));
+            SaveTaskCommand = new Command(async () => await SaveTaskAsync());
+        }
+
+        // ✅ Save task function
+        public async Task SaveTaskAsync()
+        {
+            Console.WriteLine($"Saving task with HandoverDate: {HandoverDate}");
+
+            var newTask = new TaskModel
+            {
+                CustomerName = CustomerName,
+                CustomerAddress = CustomerAddress,
+                CarMake = CarMake,
+                CarModel = CarModel,
+                RegistrationNumber = RegistrationNumber,
+                HandoverDate = HandoverDate.Date,  // ✅ Ensure only the date is saved
+                TaskDescription = TaskDescription
+            };
+
+            try
+            {
+                int rowsAffected = await _databaseService.SaveTaskAsync(newTask);
+
+                if (rowsAffected > 0)
+                {
+                    Console.WriteLine("✅ Task saved successfully");
+                }
+                else
+                {
+                    Console.WriteLine("⚠️ Task was NOT saved!");
+                }
+
+                // ✅ Reset fields after saving
+                CustomerName = string.Empty;
+                CustomerAddress = string.Empty;
+                CarMake = string.Empty;
+                CarModel = string.Empty;
+                RegistrationNumber = string.Empty;
+                HandoverDate = DateTime.Now;
+                TaskDescription = string.Empty;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Error saving task: {ex.Message}");
+            }
+        }
+
+        // ✅ PropertyChanged Implementation (For MVVM Binding)
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

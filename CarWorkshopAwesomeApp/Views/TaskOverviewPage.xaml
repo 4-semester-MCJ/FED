@@ -12,12 +12,18 @@
 
         <DatePicker Date="{Binding SelectedDate}"/>
 
-        <ListView ItemsSource="{Binding FilteredTasks}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding .}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <ListView ItemsSource="{Binding Tasks}">
+    <ListView.ItemTemplate>
+        <DataTemplate>
+            <ViewCell>
+                <StackLayout Orientation="Vertical" Padding="10">
+                    <Label Text="{Binding TaskDescription}" FontSize="18" TextColor="Black"/>
+                    <Label Text="{Binding HandoverDateString}" FontSize="14" TextColor="Gray"/>
+                </StackLayout>
+            </ViewCell>
+        </DataTemplate>
+    </ListView.ItemTemplate>
+</ListView>
+
     </VerticalStackLayout>
 </ContentPage>
