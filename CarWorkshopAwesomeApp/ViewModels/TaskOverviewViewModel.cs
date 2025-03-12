@@ -28,7 +28,7 @@ namespace CarWorkshopAwesomeApp.ViewModels
 
         public TaskOverviewViewModel()
         {
-            // Initialize with default behavior, or leave it empty for XAML binding
+            // Left it empty for XAML binding
         }
 
         public TaskOverviewViewModel(DatabaseService databaseService)
