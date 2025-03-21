@@ -1,77 +1,144 @@
-﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CarWorkshopAwesomeApp.ViewModels"
              x:Class="CarWorkshopAwesomeApp.Views.MainPage">
 
     <ContentPage.BindingContext>
-        <vm:MainViewModel />
+        <vm:MainViewModel/>
     </ContentPage.BindingContext>
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style TargetType="Label">
-                <Setter Property="FontSize" Value="12" /> <!-- Smaller font size for labels -->
-                <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="VerticalOptions" Value="Center" />
-                <Setter Property="TextColor" Value="#FFEF0792" />
+            <!-- Style for table headers -->
+            <Style x:Key="HeaderStyle"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="12"/>
+                <Setter Property="HorizontalOptions"
+                        Value="Center"/>
+                <Setter Property="VerticalOptions"
+                        Value="Center"/>
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center"/>
+                <Setter Property="Padding"
+                        Value="5"/>
+            </Style>
+            <!-- Style for table values -->
+            <Style x:Key="ValueStyle"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="12"/>
+                <Setter Property="HorizontalOptions"
+                        Value="Center"/>
+                <Setter Property="VerticalOptions"
+                        Value="Center"/>
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center"/>
+                <Setter Property="TextColor"
+                        Value="{StaticResource AwesomePink}"/>
+                <Setter Property="Padding"
+                        Value="5"/>
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <VerticalStackLayout Padding="20">
         <!-- Message Label -->
-        <Label Text="{Binding Message}" FontSize="20" />
+        <Label Text="{Binding Message}"
+               FontSize="20"
+               HorizontalOptions="Center"/>
 
         <!-- Add some space between header and table -->
-        <BoxView HeightRequest="20" BackgroundColor="White" Color="White"/>
+        <BoxView HeightRequest="20"
+                 BackgroundColor="White"
+                 Color="White"/>
 
         <!-- Table using Grid -->
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,*,*" Margin="0" BackgroundColor="White">
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto"
+              ColumnDefinitions="*,*,*"
+              Margin="0"
+              BackgroundColor="White">
 
-            <!-- Table Headers (Removed gray background) -->
-            <Frame Grid.Row="0" Grid.Column="0" BorderColor="Black" >
-                <Label Text="Name" HorizontalTextAlignment="Center" FontSize="12" Padding="5"/>
+            <!-- Table Headers -->
+            <Frame Grid.Row="0"
+                   Grid.Column="0"
+                   BorderColor="Black">
+                <Label Text="Name"
+                       Style="{StaticResource HeaderStyle}"/>
             </Frame>
-            <Frame Grid.Row="0" Grid.Column="1" BorderColor="Black" >
-                <Label Text="Studienr." HorizontalTextAlignment="Center" FontSize="12" Padding="5"/>
+            <Frame Grid.Row="0"
+                   Grid.Column="1"
+                   BorderColor="Black">
+                <Label Text="Studienr."
+                       Style="{StaticResource HeaderStyle}"/>
             </Frame>
-            <Frame Grid.Row="0" Grid.Column="2" BorderColor="Black" >
-                <Label Text="Group" HorizontalTextAlignment="Center" FontSize="12" Padding="5"/>
+            <Frame Grid.Row="0"
+                   Grid.Column="2"
+                   BorderColor="Black">
+                <Label Text="Group"
+                       Style="{StaticResource HeaderStyle}"/>
             </Frame>
 
             <!-- Row 1 Values -->
-            <Frame Grid.Row="1" Grid.Column="0" BorderColor="Black" >
-                <Label Text="Jeppe Fristed" HorizontalTextAlignment="Center" Padding="5"/>
+            <Frame Grid.Row="1"
+                   Grid.Column="0"
+                   BorderColor="Black">
+                <Label Text="Jeppe Fristed"
+                       Style="{StaticResource ValueStyle}"/>
             </Frame>
-            <Frame Grid.Row="1" Grid.Column="1" BorderColor="Black" >
-                <Label Text="202309279" HorizontalTextAlignment="Center" Padding="5"/>
+            <Frame Grid.Row="1"
+                   Grid.Column="1"
+                   BorderColor="Black">
+                <Label Text="202309279"
+                       Style="{StaticResource ValueStyle}"/>
             </Frame>
-            <Frame Grid.Row="1" Grid.Column="2" BorderColor="Black" >
-                <Label Text="14" HorizontalTextAlignment="Center" Padding="5"/>
+            <Frame Grid.Row="1"
+                   Grid.Column="2"
+                   BorderColor="Black">
+                <Label Text="14"
+                       Style="{StaticResource ValueStyle}"/>
             </Frame>
 
             <!-- Row 2 Values -->
-            <Frame Grid.Row="2" Grid.Column="0" BorderColor="Black" >
-                <Label Text="Micheal Dao" HorizontalTextAlignment="Center" Padding="5"/>
+            <Frame Grid.Row="2"
+                   Grid.Column="0"
+                   BorderColor="Black">
+                <Label Text="Micheal Dao"
+                       Style="{StaticResource ValueStyle}"/>
             </Frame>
-            <Frame Grid.Row="2" Grid.Column="1" BorderColor="Black" >
-                <Label Text="202307644" HorizontalTextAlignment="Center" Padding="5"/>
+            <Frame Grid.Row="2"
+                   Grid.Column="1"
+                   BorderColor="Black">
+                <Label Text="202307644"
+                       Style="{StaticResource ValueStyle}"/>
             </Frame>
-            <Frame Grid.Row="2" Grid.Column="2" BorderColor="Black" >
-                <Label Text="14" HorizontalTextAlignment="Center" Padding="5"/>
+            <Frame Grid.Row="2"
+                   Grid.Column="2"
+                   BorderColor="Black">
+                <Label Text="14"
+                       Style="{StaticResource ValueStyle}"/>
             </Frame>
 
             <!-- Row 3 Values -->
-            <Frame Grid.Row="3" Grid.Column="0" BorderColor="Black" >
-                <Label Text="Christopher Dolan" HorizontalTextAlignment="Center" Padding="5"/>
+            <Frame Grid.Row="3"
+                   Grid.Column="0"
+                   BorderColor="Black">
+                <Label Text="Christopher Dolan"
+                       Style="{StaticResource ValueStyle}"/>
             </Frame>
-            <Frame Grid.Row="3" Grid.Column="1" BorderColor="Black" >
-                <Label Text="202305666" HorizontalTextAlignment="Center" Padding="5"/>
+            <Frame Grid.Row="3"
+                   Grid.Column="1"
+                   BorderColor="Black">
+                <Label Text="202305666"
+                       Style="{StaticResource ValueStyle}"/>
             </Frame>
-            <Frame Grid.Row="3" Grid.Column="2" BorderColor="Black" >
-                <Label Text="14" HorizontalTextAlignment="Center" Padding="5"/>
+            <Frame Grid.Row="3"
+                   Grid.Column="2"
+                   BorderColor="Black">
+                <Label Text="14"
+                       Style="{StaticResource ValueStyle}"/>
             </Frame>
-
         </Grid>
     </VerticalStackLayout>
 </ContentPage>

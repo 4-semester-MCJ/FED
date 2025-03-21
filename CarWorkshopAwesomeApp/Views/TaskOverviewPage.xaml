@@ -2,28 +2,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:CarWorkshopAwesomeApp.ViewModels"
              x:Class="CarWorkshopAwesomeApp.Views.TaskOverviewPage">
-    
-    <ContentPage.BindingContext>
-        <vm:TaskOverviewViewModel />
-    </ContentPage.BindingContext>
 
     <VerticalStackLayout Padding="20">
-        <Label Text="Task Overview" FontSize="24" HorizontalOptions="Center"/>
+        <Label Text="Task Overview"
+               FontSize="24"
+               HorizontalOptions="Center"/>
 
         <DatePicker Date="{Binding SelectedDate}"/>
 
         <ListView ItemsSource="{Binding Tasks}">
-    <ListView.ItemTemplate>
-        <DataTemplate>
-            <ViewCell>
-                <StackLayout Orientation="Vertical" Padding="10">
-                    <Label Text="{Binding TaskDescription}" FontSize="18" TextColor="Black"/>
-                    <Label Text="{Binding HandoverDateString}" FontSize="14" TextColor="Gray"/>
-                </StackLayout>
-            </ViewCell>
-        </DataTemplate>
-    </ListView.ItemTemplate>
-</ListView>
-
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Vertical"
+                                     Padding="10">
+                            <Label Text="{Binding TaskDescription}"
+                                   FontSize="18"
+                                   TextColor="Black"/>
+                            <Label Text="{Binding HandoverDateString}"
+                                   FontSize="14"
+                                   TextColor="Gray"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </VerticalStackLayout>
 </ContentPage>

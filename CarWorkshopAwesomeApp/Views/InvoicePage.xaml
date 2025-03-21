@@ -3,112 +3,183 @@
              xmlns:vm="clr-namespace:CarWorkshopAwesomeApp.ViewModels"
              x:Class="CarWorkshopAwesomeApp.Views.InvoicePage">
 
-    <ContentPage.BindingContext>
-        <vm:InvoiceViewModel />
-    </ContentPage.BindingContext>
+       <ScrollView>
+              <VerticalStackLayout Padding="20"
+                                   Spacing="15">
+                     <Label Text="Invoice Registration"
+                            FontSize="24"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"/>
 
-<VerticalStackLayout Padding="20" Spacing="15">
-    <!-- This Is our custom Style: -->
-    <Label Text="Invoice Registration" Style="{StaticResource LabelStyle}"/>
+                     <!-- Task Selection -->
+                     <Frame Padding="15"
+                            BorderColor="Gray"
+                            CornerRadius="5"
+                            BackgroundColor="White">
+                            <VerticalStackLayout Spacing="10">
+                                   <Label Text="Select Task"
+                                          FontSize="18"
+                                          FontAttributes="Bold"/>
+                                   <Picker ItemsSource="{Binding AvailableTasks}"
+                                           SelectedItem="{Binding SelectedTask}"
+                                           ItemDisplayBinding="{Binding TaskDescription}"/>
 
+                                   <!-- Task Details -->
+                                   <Grid RowDefinitions="Auto,Auto"
+                                         ColumnDefinitions="Auto,*"
+                                         ColumnSpacing="10">
+                                          <Label Text="Customer:"
+                                                 Grid.Row="0"
+                                                 Grid.Column="0"
+                                                 FontAttributes="Bold"/>
+                                          <Label Text="{Binding CustomerName}"
+                                                 Grid.Row="0"
+                                                 Grid.Column="1"/>
+                                          <Label Text="Description:"
+                                                 Grid.Row="1"
+                                                 Grid.Column="0"
+                                                 FontAttributes="Bold"/>
+                                          <Label Text="{Binding TaskDescription}"
+                                                 Grid.Row="1"
+                                                 Grid.Column="1"/>
+                                   </Grid>
+                            </VerticalStackLayout>
+                     </Frame>
 
-        <!-- Two Side-by-Side Boxes: Inputs & BOM -->
-        <Grid ColumnDefinitions="1*, 1*" ColumnSpacing="20">
+                     <!-- Input Details -->
+                     <Frame Padding="15"
+                            BorderColor="Gray"
+                            CornerRadius="5"
+                            BackgroundColor="White">
+                            <VerticalStackLayout Spacing="10">
+                                   <Label Text="Labor Details"
+                                          FontSize="18"
+                                          FontAttributes="Bold"/>
 
-            <!-- Left Box: Input Form -->
-            <Frame Grid.Column="0" Padding="15" BorderColor="Gray" CornerRadius="5" BackgroundColor="White">
-                <VerticalStackLayout Spacing="10">
+                                   <Grid ColumnDefinitions="Auto,*"
+                                         RowDefinitions="Auto,Auto,Auto,Auto"
+                                         RowSpacing="10"
+                                         ColumnSpacing="10">
+                                          <Label Text="Mechanic Name:"
+                                                 Grid.Row="0"
+                                                 Grid.Column="0"
+                                                 VerticalOptions="Center"/>
+                                          <Entry Text="{Binding MechanicName}"
+                                                 Grid.Row="0"
+                                                 Grid.Column="1"/>
 
-                    <Label Text="Input Details" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+                                          <Label Text="Hours Worked:"
+                                                 Grid.Row="1"
+                                                 Grid.Column="0"
+                                                 VerticalOptions="Center"/>
+                                          <Entry Text="{Binding HoursWorked}"
+                                                 Keyboard="Numeric"
+                                                 Grid.Row="1"
+                                                 Grid.Column="1"/>
 
-                    <!-- Grid for Input Fields -->
-                    <Grid ColumnDefinitions="Auto, 200" RowDefinitions="Auto, Auto, Auto, Auto" RowSpacing="10">
-                        
-                        <Label Text="Mechanic Name:" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center" Margin="0,0,10,0"/>
-                        <Entry Text="{Binding MechanicName}" Grid.Row="0" Grid.Column="1" WidthRequest="200" HorizontalOptions="Start"/>
+                                          <Label Text="Hourly Rate ($):"
+                                                 Grid.Row="2"
+                                                 Grid.Column="0"
+                                                 VerticalOptions="Center"/>
+                                          <Entry Text="{Binding HourlyRate}"
+                                                 Keyboard="Numeric"
+                                                 Grid.Row="2"
+                                                 Grid.Column="1"/>
 
-                        <Label Text="Hours Worked:" Grid.Row="1" Grid.Column="0" VerticalTextAlignment="Center" Margin="0,0,10,0"/>
-                        <Entry Text="{Binding HoursWorked}" Keyboard="Numeric" Grid.Row="1" Grid.Column="1" WidthRequest="200" HorizontalOptions="Start"/>
+                                          <Label Text="Discount (%):"
+                                                 Grid.Row="3"
+                                                 Grid.Column="0"
+                                                 VerticalOptions="Center"/>
+                                          <Entry Text="{Binding DiscountPercentage}"
+                                                 Keyboard="Numeric"
+                                                 Grid.Row="3"
+                                                 Grid.Column="1"/>
+                                   </Grid>
+                            </VerticalStackLayout>
+                     </Frame>
 
-                        <Label Text="Hourly Rate ($):" Grid.Row="2" Grid.Column="0" VerticalTextAlignment="Center" Margin="0,0,10,0"/>
-                        <Entry Text="{Binding HourlyRate}" Keyboard="Numeric" Grid.Row="2" Grid.Column="1" WidthRequest="200" HorizontalOptions="Start"/>
+                     <!-- Materials Section -->
+                     <Frame Padding="15"
+                            BorderColor="Gray"
+                            CornerRadius="5"
+                            BackgroundColor="White">
+                            <VerticalStackLayout Spacing="10">
+                                   <Label Text="Materials"
+                                          FontSize="18"
+                                          FontAttributes="Bold"/>
+                                   <Button Text="Add Material"
+                                           Style="{StaticResource ButtonStyle}"
+                                           Command="{Binding AddMaterialCommand}"/>
 
-                        <Label Text="Discount (%):" Grid.Row="3" Grid.Column="0" VerticalTextAlignment="Center" Margin="0,0,10,0"/>
-                        <Entry Text="{Binding DiscountPercentage}" Keyboard="Numeric" Grid.Row="3" Grid.Column="1" WidthRequest="200" HorizontalOptions="Start"/>
-                    
-                    </Grid>
+                                   <CollectionView ItemsSource="{Binding Materials}"
+                                                   EmptyView="No materials added">
+                                          <CollectionView.ItemTemplate>
+                                                 <DataTemplate>
+                                                        <Grid ColumnDefinitions="*, Auto, Auto, Auto"
+                                                              Padding="5"
+                                                              ColumnSpacing="10">
+                                                               <Entry Placeholder="Material Name"
+                                                                      Text="{Binding Name}"
+                                                                      Grid.Column="0"/>
+                                                               <Entry Placeholder="Price"
+                                                                      Text="{Binding Price}"
+                                                                      Keyboard="Numeric"
+                                                                      WidthRequest="80"
+                                                                      Grid.Column="1"/>
+                                                               <Entry Placeholder="Qty"
+                                                                      Text="{Binding Quantity}"
+                                                                      Keyboard="Numeric"
+                                                                      WidthRequest="50"
+                                                                      Grid.Column="2"/>
+                                                               <Button Text="Remove"
+                                                                       Command="{Binding Source={RelativeSource AncestorType={x:Type vm:InvoiceViewModel}}, Path=RemoveMaterialCommand}"
+                                                                       CommandParameter="{Binding}"
+                                                                       Grid.Column="3"/>
+                                                        </Grid>
+                                                 </DataTemplate>
+                                          </CollectionView.ItemTemplate>
+                                   </CollectionView>
+                            </VerticalStackLayout>
+                     </Frame>
 
-                </VerticalStackLayout>
-            </Frame>
+                     <!-- Totals Section -->
+                     <Frame Padding="15"
+                            BorderColor="Gray"
+                            CornerRadius="5"
+                            BackgroundColor="White">
+                            <VerticalStackLayout Spacing="10">
+                                   <Label Text="Invoice Summary"
+                                          FontSize="18"
+                                          FontAttributes="Bold"/>
+                                   <Grid ColumnDefinitions="Auto,*"
+                                         RowDefinitions="Auto,Auto,Auto"
+                                         RowSpacing="5">
+                                          <Label Text="Materials Total:"
+                                                 Grid.Row="0"
+                                                 Grid.Column="0"
+                                                 FontAttributes="Bold"/>
+                                          <Label Text="{Binding TotalMaterialCost, StringFormat='${0:F2}'}"
+                                                 Grid.Row="0"
+                                                 Grid.Column="1"/>
 
-            <!-- Right Box: BOM/Quotation Overview -->
-<Frame Grid.Column="1" Padding="15" BorderColor="Gray" CornerRadius="5" BackgroundColor="White">
-    <VerticalStackLayout Spacing="10">
+                                          <Label Text="Labor Cost:"
+                                                 Grid.Row="1"
+                                                 Grid.Column="0"
+                                                 FontAttributes="Bold"/>
+                                          <Label Text="{Binding LaborCost, StringFormat='${0:F2}'}"
+                                                 Grid.Row="1"
+                                                 Grid.Column="1"/>
 
-        <Label Text="Quotation Overview" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
-        <BoxView HeightRequest="1" BackgroundColor="Gray" Margin="0,5,0,5"/>
-        
-        <!-- Total Cost (Centered) -->
-        <Label Text="{Binding TotalCost, StringFormat='Total Cost: {0}$'}" FontSize="16" FontAttributes="Bold" HorizontalOptions="Center"/>
-
-        <!-- BOM Summary (Left Aligned) -->
-        <Label Text="{Binding HoursWorked, StringFormat='Hours: {0}'}" FontSize="12" HorizontalOptions="Start"/>
-        <Label Text="{Binding HourlyRate, StringFormat='Hourly Rate: {0}$'}" FontSize="12" HorizontalOptions="Start"/>
-        <Label Text="{Binding DiscountPercentage, StringFormat='Discount: {0}%'}" FontSize="12" HorizontalOptions="Start"/>
-        <Label Text="Materials Used:" FontSize="12" FontAttributes="Bold" HorizontalOptions="Start"/>
-
-        <!-- Material List in BOM -->
-        <ListView ItemsSource="{Binding Materials}" HasUnevenRows="True" SeparatorVisibility="None">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <HorizontalStackLayout Spacing="10">
-                            <Label Text="{Binding Name}" FontSize="12" WidthRequest="100"/>
-                            <Label Text="{Binding Quantity, StringFormat='Qty: {0}'}" FontSize="12" WidthRequest="50"/>
-                            <Label Text="{Binding Price, StringFormat='${0}$'}" FontSize="12"/>
-                        </HorizontalStackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-
-        <Label Text="{Binding TotalMaterialCost, StringFormat='Total Material Cost: {0}$'}" FontSize="12" HorizontalOptions="Start"/>
-
-    
-    </VerticalStackLayout>
-</Frame>
-
-
-        </Grid>
-
-        <!-- Materials Section (Under Input Box) -->
-        <VerticalStackLayout Spacing="5">
-
-            <!-- "Materials Used" Title & Small Button -->
-            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                <Label Text="Materials Used:" FontSize="18" FontAttributes="Bold" VerticalTextAlignment="Center"/>
-                <Button Text="+" Command="{Binding AddMaterialCommand}" Style="{StaticResource ButtonStyle}"/>
-            </HorizontalStackLayout>
-
-            <!-- Scrollable List of Materials -->
-            <ScrollView HeightRequest="150">
-                <ListView ItemsSource="{Binding Materials}" HasUnevenRows="True">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid ColumnDefinitions="150, 80, 50, Auto" Padding="5" ColumnSpacing="5">
-                                    <Entry Placeholder="Material Name" Text="{Binding Name}" Grid.Column="0" WidthRequest="150" HorizontalOptions="Start"/>
-                                    <Entry Placeholder="Price ($)" Text="{Binding Price}" Keyboard="Numeric" Grid.Column="1" WidthRequest="80" HorizontalOptions="Start"/>
-                                    <Entry Placeholder="Qty" Text="{Binding Quantity}" Keyboard="Numeric" Grid.Column="2" WidthRequest="50" HorizontalOptions="Start"/>
-                                    <Button Text="❌" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:InvoiceViewModel}}, Path=RemoveMaterialCommand}" CommandParameter="{Binding}" Grid.Column="3"/>
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </ScrollView>
-
-        </VerticalStackLayout>
-
-    </VerticalStackLayout>
+                                          <Label Text="Total Cost:"
+                                                 Grid.Row="2"
+                                                 Grid.Column="0"
+                                                 FontAttributes="Bold"/>
+                                          <Label Text="{Binding TotalCost, StringFormat='${0:F2}'}"
+                                                 Grid.Row="2"
+                                                 Grid.Column="1"/>
+                                   </Grid>
+                            </VerticalStackLayout>
+                     </Frame>
+              </VerticalStackLayout>
+       </ScrollView>
 </ContentPage>

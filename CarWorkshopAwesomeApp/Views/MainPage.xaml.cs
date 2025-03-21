@@ -4,9 +4,9 @@ namespace CarWorkshopAwesomeApp.Views;
 
 public partial class MainPage : ContentPage
 {
-    public MainPage()
+    public MainPage(MainViewModel viewModel)
     {
-        InitializeComponent(); // This must be here
-        BindingContext = new MainViewModel(); // Ensure ViewModel is set
+        InitializeComponent();
+        BindingContext = viewModel;
     }
 }
