@@ -118,6 +118,7 @@ public class InvoiceViewModel : INotifyPropertyChanged
 
     public Command AddMaterialCommand { get; }
     public Command RemoveMaterialCommand { get; }
+    public Command RefreshTasksCommand { get; }
 
     public InvoiceViewModel(DatabaseService databaseService)
     {
@@ -165,10 +166,11 @@ public class InvoiceViewModel : INotifyPropertyChanged
             }
         });
 
+        RefreshTasksCommand = new Command(async () => await LoadTasks());
         LoadTasks();
     }
 
-    private async void LoadTasks()
+    public async Task LoadTasks()
     {
         var tasks = await _databaseService.GetTasksByDateAsync(DateTime.Now);
         AvailableTasks.Clear();
