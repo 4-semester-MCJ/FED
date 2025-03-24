@@ -18,8 +18,7 @@ public class InvoiceViewModel : INotifyPropertyChanged
     private decimal _discountPercentage;
     private decimal _totalCost;
     private string _taskDescription;
-    private string _customerName;
-
+    private string _customerName; 
     public TaskModel SelectedTask
     {
         get => _selectedTask;

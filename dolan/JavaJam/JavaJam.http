@@ -1,0 +1,6 @@
+@JavaJam_HostAddress = http://localhost:5192
+
+GET {{JavaJam_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -450,7 +450,7 @@
 
     <!-- This is our custom Style Home-->
     <Style x:Key="LabelStyle" TargetType="Label">
-        <Setter Property="FontSize" Value="50"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="HorizontalOptions" Value="Center"/>
         <Setter Property="VerticalOptions" Value="Center"/>
         <Setter Property="FontAttributes" Value="Bold"/>

@@ -1,0 +1,36 @@
+body {
+	font-family: "Times New Roman", sans-serif;
+	font-size: 16px;
+	color: #333;
+	text-align: left;
+	margin: 20px;
+}
+
+h1 {
+	font-size: 32px;
+	font-weight: bold;
+}
+
+nav {
+	margin: 15px 0;
+}
+
+nav a {
+	text-decoration: none;
+	color: blue;
+	font-weight: bold;
+	margin: 0 10px;
+}
+
+ul {
+	list-style-type: disc;
+	padding-left: 20px;
+	display: inline-block;
+	text-align: left;
+}
+
+.copyright {
+	font-size: 12px;
+	color: gray;
+	margin-top: 20px;
+}

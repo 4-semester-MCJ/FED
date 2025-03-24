@@ -24,22 +24,6 @@
                 <Setter Property="Padding"
                         Value="5"/>
             </Style>
-            <!-- Style for table values -->
-            <Style x:Key="ValueStyle"
-                   TargetType="Label">
-                <Setter Property="FontSize"
-                        Value="12"/>
-                <Setter Property="HorizontalOptions"
-                        Value="Center"/>
-                <Setter Property="VerticalOptions"
-                        Value="Center"/>
-                <Setter Property="HorizontalTextAlignment"
-                        Value="Center"/>
-                <Setter Property="TextColor"
-                        Value="{StaticResource AwesomePink}"/>
-                <Setter Property="Padding"
-                        Value="5"/>
-            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -85,19 +69,19 @@
                    Grid.Column="0"
                    BorderColor="Black">
                 <Label Text="Jeppe Fristed"
-                       Style="{StaticResource ValueStyle}"/>
+                       Style="{StaticResource LabelStyle}"/>
             </Frame>
             <Frame Grid.Row="1"
                    Grid.Column="1"
                    BorderColor="Black">
                 <Label Text="202309279"
-                       Style="{StaticResource ValueStyle}"/>
+                       Style="{StaticResource LabelStyle}"/>
             </Frame>
             <Frame Grid.Row="1"
                    Grid.Column="2"
                    BorderColor="Black">
                 <Label Text="14"
-                       Style="{StaticResource ValueStyle}"/>
+                       Style="{StaticResource LabelStyle}"/>
             </Frame>
 
             <!-- Row 2 Values -->
@@ -105,19 +89,19 @@
                    Grid.Column="0"
                    BorderColor="Black">
                 <Label Text="Micheal Dao"
-                       Style="{StaticResource ValueStyle}"/>
+                       Style="{StaticResource LabelStyle}"/>
             </Frame>
             <Frame Grid.Row="2"
                    Grid.Column="1"
                    BorderColor="Black">
                 <Label Text="202307644"
-                       Style="{StaticResource ValueStyle}"/>
+                       Style="{StaticResource LabelStyle}"/>
             </Frame>
             <Frame Grid.Row="2"
                    Grid.Column="2"
                    BorderColor="Black">
                 <Label Text="14"
-                       Style="{StaticResource ValueStyle}"/>
+                       Style="{StaticResource LabelStyle}"/>
             </Frame>
 
             <!-- Row 3 Values -->
@@ -125,19 +109,19 @@
                    Grid.Column="0"
                    BorderColor="Black">
                 <Label Text="Christopher Dolan"
-                       Style="{StaticResource ValueStyle}"/>
+                       Style="{StaticResource LabelStyle}"/>
             </Frame>
             <Frame Grid.Row="3"
                    Grid.Column="1"
                    BorderColor="Black">
                 <Label Text="202305666"
-                       Style="{StaticResource ValueStyle}"/>
+                       Style="{StaticResource LabelStyle}"/>
             </Frame>
             <Frame Grid.Row="3"
                    Grid.Column="2"
                    BorderColor="Black">
                 <Label Text="14"
-                       Style="{StaticResource ValueStyle}"/>
+                       Style="{StaticResource LabelStyle}"/>
             </Frame>
         </Grid>
     </VerticalStackLayout>
