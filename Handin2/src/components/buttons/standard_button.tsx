@@ -68,8 +68,9 @@ const Button: React.FC<ButtonProps> = ({
 			type={type}
 			onClick={handleClick}
 			disabled={disabled || isLoading}
-			className={`px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition disabled:opacity-50 ${className}`}
+			className={`min-w-[60px] w-[20vw] max-w-[300px] px-2 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition disabled:opacity-50 ${className}`}
 		>
+			{" "}
 			{isLoading ? loadingText : children}
 		</button>
 	);
