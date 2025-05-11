@@ -2,6 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: "http://localhost:8080/api",
+
 });
 
 export const setAuthToken = (token: string) => {
@@ -30,6 +31,7 @@ export const login = async (username: string, password: string) => {
       throw new Error("An unexpected error occurred during login");
     }
   }
+
 };
 
 // Manager-specific actions
