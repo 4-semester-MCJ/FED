@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Homepage from "../pages/Homepage";
+import LoginPage from "./pages/LoginPage"; // Importer login-siden
 
-export function App() {
-	return (
-		<Router>
-			<Routes>
-				<Route path="/" element={<Homepage />} />
-			</Routes>
-		</Router>
-	);
-}
+const App: React.FC = () => {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<LoginPage />} />
+            </Routes>
+        </Router>
+    );
+};
 
 export default App;
