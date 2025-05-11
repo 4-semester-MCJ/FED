@@ -3,7 +3,7 @@ import Button from "../components/buttons/standard_button";
 import Table from "../components/table/table";
 import type { Job } from "../interfaces/job";
 import type { Model } from "../interfaces/model";
-import { getAllJobs, getAllModels, addModelToJob, removeModelFromJob } from "../services/api";
+import { getAllJobs, createModel, getAllModels, addModelToJob, removeModelFromJob } from "../services/api";
 import Modal from "../components/modal/modal";
 import { AddModelButton } from "../components/buttons/AddModelButton";
 import { RemoveModelButton } from "../components/buttons/RemoveModelButton";
@@ -15,7 +15,25 @@ const ManagerPage: React.FC = () => {
 	const [models, setModels] = useState<Model[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-
+	const [modelData, setModelData] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNo: "",
+        addressLine1: "",
+        addressLine2: "",
+        zip: "",
+        city: "",
+        country: "",
+        birthDate: "",
+        nationality: "",
+        height: "",
+        shoeSize: "",
+        hairColor: "",
+        eyeColor: "",
+        comments: "",
+        password: "",
+    });
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -33,6 +51,43 @@ const ManagerPage: React.FC = () => {
 
 		fetchData();
 	}, []);
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setModelData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+	const handleCreateModel = async () => {
+        try {
+            await createModel(modelData);
+            alert("Model created successfully!");
+            setIsModalOpen(false);
+            setModelData({
+                firstName: "",
+                lastName: "",
+                email: "",
+                phoneNo: "",
+                addressLine1: "",
+                addressLine2: "",
+                zip: "",
+                city: "",
+                country: "",
+                birthDate: "",
+                nationality: "",
+                height: "",
+                shoeSize: "",
+                hairColor: "",
+                eyeColor: "",
+                comments: "",
+                password: "",
+            });
+        } catch (error) {
+            console.error("Error creating model:", error);
+            alert("Failed to create model. Please try again.");
+        }
+    };
 
 	const handleModelAdded = async () => {
 		try {
@@ -62,6 +117,7 @@ const ManagerPage: React.FC = () => {
 		"Actions",
 		"Comments",
 	];
+
 
 	const formatDate = (dateString: string) => {
 		return new Date(dateString).toLocaleDateString();
@@ -130,6 +186,153 @@ const ManagerPage: React.FC = () => {
 					Opret nyt job
 				</Button>
 			</div>
+                    <div className="space-y-4 max-h-[80vh] overflow-y-auto p-4">
+                        <input
+                            type="text"
+                            name="firstName"
+                            placeholder="First Name"
+                            value={modelData.firstName}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="lastName"
+                            placeholder="Last Name"
+                            value={modelData.lastName}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            value={modelData.email}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="phoneNo"
+                            placeholder="Phone Number"
+                            value={modelData.phoneNo}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="addressLine1"
+                            placeholder="Address Line 1"
+                            value={modelData.addressLine1}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="addressLine2"
+                            placeholder="Address Line 2"
+                            value={modelData.addressLine2}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="zip"
+                            placeholder="ZIP Code"
+                            value={modelData.zip}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="city"
+                            placeholder="City"
+                            value={modelData.city}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="country"
+                            placeholder="Country"
+                            value={modelData.country}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <input
+                            type="date"
+                            name="birthDate"
+                            placeholder="Birth Date"
+                            value={modelData.birthDate}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="nationality"
+                            placeholder="Nationality"
+                            value={modelData.nationality}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="height"
+                            placeholder="Height"
+                            value={modelData.height}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="shoeSize"
+                            placeholder="Shoe Size"
+                            value={modelData.shoeSize}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="hairColor"
+                            placeholder="Hair Color"
+                            value={modelData.hairColor}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="eyeColor"
+                            placeholder="Eye Color"
+                            value={modelData.eyeColor}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <textarea
+                            name="comments"
+                            placeholder="Comments"
+                            value={modelData.comments}
+                            onChange={(e) =>
+                                setModelData((prevData) => ({
+                                    ...prevData,
+                                    comments: e.target.value,
+                                }))
+                            }
+                            className="border p-2 w-full"
+                        />
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            value={modelData.password}
+                            onChange={handleInputChange}
+                            className="border p-2 w-full"
+                        />
+                        <Button onClick={handleCreateModel}>Create Model</Button>
+                    </div>
+                </Modal>
+                <Button>Ny manager</Button>
+                <Button>Opret nyt job</Button>
+            </div>
 
 			{loading ? (
 				<div className="text-center">Loading...</div>
