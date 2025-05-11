@@ -15,7 +15,14 @@ const Table: React.FC<TableProps> = ({ headers, data, className = "" }) => {
 				<thead>
 					<tr className="bg-gray-100">
 						{headers.map((header, index) => (
-							<th key={index} className="px-6 py-3 border-b text-left">
+							<th
+								key={index}
+								className={
+									index === 6
+										? "px-6 py-3 border-b text-left pl-20"
+										: "px-6 py-3 border-b text-left"
+								}
+							>
 								{header}
 							</th>
 						))}
@@ -25,7 +32,14 @@ const Table: React.FC<TableProps> = ({ headers, data, className = "" }) => {
 					{data.map((row, rowIndex) => (
 						<tr key={rowIndex}>
 							{row.map((cell, cellIndex) => (
-								<td key={cellIndex} className="px-6 py-4 border-b">
+								<td
+									key={cellIndex}
+									className={
+										(cellIndex === 6
+											? 'border-b text-center align-middle p-0'
+											: 'px-6 py-4 border-b align-middle')
+									}
+								>
 									{cell}
 								</td>
 							))}

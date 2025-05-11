@@ -58,8 +58,8 @@ const ModelPage: React.FC = () => {
 				amount: expenseAmount,
 			});
 
-			await addExpenseToJob(selectedJobId.toString(), {
-				modelId, // Send modelId
+			await addExpenseToJob({
+				modelId,
 				jobId: selectedJobId,
 				date: new Date().toISOString(),
 				text: expenseDescription,
