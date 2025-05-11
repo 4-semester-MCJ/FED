@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://localhost/api",
+  baseURL: "http://localhost:8080/api",
+
 });
 
 export const setAuthToken = (token: string) => {
@@ -10,8 +11,27 @@ export const setAuthToken = (token: string) => {
 
 // Login
 export const login = async (username: string, password: string) => {
-  const response = await api.post("/login", { username, password });
-  return response.data;
+  try {
+    console.log("Sending login request:", { username, password });
+
+    // Send POST-forespørgsel til backend
+    const response = await api.post("Account/login", { username, password });
+
+    console.log("Login successful. Response data:", response.data);
+
+    // Returner token fra backend
+    return response.data; // Forventet respons: { token: string }
+  } catch (error) {
+    // Log fejl for debugging
+    if (axios.isAxiosError(error)) {
+      console.error("Axios error:", error.response?.data || error.message);
+      throw new Error(error.response?.data?.message || "Login failed");
+    } else {
+      console.error("Unexpected error:", error);
+      throw new Error("An unexpected error occurred during login");
+    }
+  }
+
 };
 
 // Manager-specific actions
