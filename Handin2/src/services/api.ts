@@ -65,13 +65,13 @@ export const getMyJobs = async () => {
 	return response.data;
 };
 
-export const addExpenseToJob = async (jobId: string, expenseData: any) => {
+export const addExpenseToJob = async (expenseData: any) => {
 	const response = await api.post("/Expenses", {
-        modelId: expenseData.modelId, // Send modelId
-        jobId: expenseData.jobId, // Send jobId
-        date: expenseData.date, // Send dato
-        text: expenseData.text, // Send beskrivelse
-        amount: expenseData.amount, // Send beløb
+		modelId: expenseData.modelId,
+		jobId: expenseData.jobId,
+		date: expenseData.date,
+		text: expenseData.text,
+		amount: expenseData.amount,
 	});
 	return response.data;
 };

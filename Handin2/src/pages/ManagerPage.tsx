@@ -3,7 +3,7 @@ import Button from "../components/buttons/standard_button";
 import Table from "../components/table/table";
 import type { Job } from "../interfaces/job";
 import type { Model } from "../interfaces/model";
-import { getAllJobs, createModel, getAllModels, addModelToJob, removeModelFromJob } from "../services/api";
+import { getAllJobs, createModel, getAllModels} from "../services/api";
 import Modal from "../components/modal/modal";
 import { AddModelButton } from "../components/buttons/AddModelButton";
 import { RemoveModelButton } from "../components/buttons/RemoveModelButton";
@@ -12,7 +12,6 @@ import { faUserPlus, faUserTie, faBriefcase } from '@fortawesome/free-solid-svg-
 
 const ManagerPage: React.FC = () => {
 	const [jobs, setJobs] = useState<Job[]>([]);
-	const [models, setModels] = useState<Model[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [modelData, setModelData] = useState({
@@ -37,12 +36,11 @@ const ManagerPage: React.FC = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const [jobsData, modelsData] = await Promise.all([
+				const [jobsData] = await Promise.all([
 					getAllJobs(),
 					getAllModels()
 				]);
 				setJobs(jobsData);
-				setModels(modelsData);
 			} catch (error) {
 			} finally {
 				setLoading(false);
@@ -175,18 +173,7 @@ const ManagerPage: React.FC = () => {
 					onClose={() => setIsModalOpen(false)}
 					title="Ny Model"
 				>
-					<p>Modal Content</p>
-				</Modal>
-				<Button>
-					<FontAwesomeIcon icon={faUserTie} className="w-4 h-4 mr-2" />
-					Ny manager
-				</Button>
-				<Button>
-					<FontAwesomeIcon icon={faBriefcase} className="w-4 h-4 mr-2" />
-					Opret nyt job
-				</Button>
-			</div>
-                    <div className="space-y-4 max-h-[80vh] overflow-y-auto p-4">
+					<div className="space-y-4 max-h-[80vh] overflow-y-auto p-4">
                         <input
                             type="text"
                             name="firstName"
@@ -327,13 +314,18 @@ const ManagerPage: React.FC = () => {
                             onChange={handleInputChange}
                             className="border p-2 w-full"
                         />
-                        <Button onClick={handleCreateModel}>Create Model</Button>
-                    </div>
-                </Modal>
-                <Button>Ny manager</Button>
-                <Button>Opret nyt job</Button>
-            </div>
-
+						<Button onClick={handleCreateModel}>Create Model</Button>
+					</div>	
+				</Modal>
+				<Button>
+					<FontAwesomeIcon icon={faUserTie} className="w-4 h-4 mr-2" />
+					Ny manager
+				</Button>
+				<Button>
+					<FontAwesomeIcon icon={faBriefcase} className="w-4 h-4 mr-2" />
+					Opret nyt job
+				</Button>
+			</div>
 			{loading ? (
 				<div className="text-center">Loading...</div>
 			) : jobs.length === 0 ? (
