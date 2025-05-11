@@ -32,17 +32,17 @@ export const login = async (email: string, password: string) => {
 };
 // Manager-specific actions
 export const createModel = async (modelData: any) => {
-	const response = await api.post("/models", modelData);
+	const response = await api.post("/Models", modelData);
 	return response.data;
 };
 
 export const createManager = async (managerData: any) => {
-	const response = await api.post("/managers", managerData);
+	const response = await api.post("/Managers", managerData);
 	return response.data;
 };
 
 export const createJob = async (jobData: any) => {
-	const response = await api.post("/jobs", jobData);
+	const response = await api.post("/Jobs", jobData);
 	return response.data;
 };
 
