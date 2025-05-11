@@ -12,6 +12,14 @@ api.interceptors.request.use((config) => {
 	return config;
 });
 
+api.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
 export const setAuthToken = (token: string) => {
 	api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 };
@@ -49,17 +57,23 @@ export const removeModelFromJob = async (jobId: string, modelId: string) => {
 };
 
 export const getAllJobs = async () => {
-	const response = await api.get("/jobs");
-	return response.data;
+  const response = await api.get("/Jobs");
+  return response.data;
 };
 
 // Model-specific actions
 export const getMyJobs = async () => {
-	const response = await api.get("/my-jobs");
-	return response.data;
+  const response = await api.get("/Jobs");
+  return response.data;
 };
 
 export const addExpenseToJob = async (jobId: string, expenseData: any) => {
-	const response = await api.post(`/jobs/${jobId}/expenses`, expenseData);
-	return response.data;
+    const response = await api.post("/Expenses", {
+        modelId: expenseData.modelId, // Send modelId
+        jobId: expenseData.jobId, // Send jobId
+        date: expenseData.date, // Send dato
+        text: expenseData.text, // Send beskrivelse
+        amount: expenseData.amount, // Send beløb
+    });
+    return response.data;
 };

@@ -10,7 +10,7 @@ const LoginPage: React.FC = () => {
     const navigate = useNavigate();
 
         
-        const handleLogin = async () => {
+                const handleLogin = async () => {
             if (!email || !password) {
                 alert("Please fill in both fields.");
                 return;
@@ -27,15 +27,18 @@ const LoginPage: React.FC = () => {
         
                 // Check if token exists
                 if (token) {
-                    // Decode the token to extract the role
+                    // Decode the token to extract the role and modelId
                     const decodedToken: any = jwtDecode(token);
                     const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+                    const modelId = decodedToken.ModelId; // Hent ModelId korrekt fra tokenet
         
                     console.log("Role:", role);
+                    console.log("Model ID:", modelId);
         
-                    // Save token and role to localStorage
+                    // Save token, role, and modelId to localStorage
                     localStorage.setItem("token", token);
                     localStorage.setItem("role", role);
+                    localStorage.setItem("modelId", modelId); // Gem modelId i localStorage
         
                     // Navigate to the appropriate page based on role
                     if (role === "Manager") {
@@ -49,10 +52,8 @@ const LoginPage: React.FC = () => {
                     console.error("No token received from backend.");
                     alert("Login failed: No token received.");
                 }
-            } catch (error) {
+            } catch (error: any) {
                 console.error("Login failed:", error);
-        
-                // Handle Axios errors
                 if (error.response) {
                     console.error("Backend error response:", error.response.data);
                     alert(error.response.data.message || "Invalid username or password.");
