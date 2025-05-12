@@ -1,3 +1,5 @@
+import type { Job } from "./job";
+
 export interface Model {
 	modelId: number;
 	firstName: string;
@@ -16,5 +18,5 @@ export interface Model {
 	hairColor?: string;
 	eyeColor?: string;
 	comments?: string;
-	jobs?: any[];
+	jobs?: Job[];
 }
