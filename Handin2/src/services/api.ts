@@ -46,19 +46,52 @@ export const createJob = async (jobData: any) => {
 	return response.data;
 };
 
-export const addModelToJob = async (jobId: string, modelId: string) => {
-	const response = await api.post(`/jobs/${jobId}/models`, { modelId });
-	return response.data;
+export const addModelToJob = async (jobId: number, modelId: number) => {
+	console.log('Adding model to job:', { jobId, modelId });
+	try {
+		const response = await api.post(`/Jobs/${jobId}/model/${modelId}`);
+		console.log('Add model response:', response.data);
+		return response.data;
+	} catch (error) {
+		console.error('Add model error:', error);
+		throw error;
+	}
 };
 
-export const removeModelFromJob = async (jobId: string, modelId: string) => {
-	const response = await api.delete(`/jobs/${jobId}/models/${modelId}`);
-	return response.data;
+export const removeModelFromJob = async (jobId: number, modelId: number) => {
+	console.log('Removing model from job:', { jobId, modelId });
+	try {
+		const response = await api.delete(`/Jobs/${jobId}/model/${modelId}`);
+		console.log('Remove model response:', response.data);
+		return response.data;
+	} catch (error) {
+		console.error('Remove model error:', error);
+		throw error;
+	}
 };
 
 export const getAllJobs = async () => {
-	const response = await api.get("/Jobs");
-	return response.data;
+	console.log('Fetching all jobs');
+	try {
+		const response = await api.get("/Jobs");
+		console.log('Get jobs response:', response.data);
+		return response.data;
+	} catch (error) {
+		console.error('Get jobs error:', error);
+		throw error;
+	}
+};
+
+export const getAllModels = async () => {
+	console.log('Fetching all models');
+	try {
+		const response = await api.get("/models");
+		console.log('Get models response:', response.data);
+		return response.data;
+	} catch (error) {
+		console.error('Get models error:', error);
+		throw error;
+	}
 };
 
 // Model-specific actions
@@ -67,13 +100,13 @@ export const getMyJobs = async () => {
 	return response.data;
 };
 
-export const addExpenseToJob = async (jobId: string, expenseData: any) => {
+export const addExpenseToJob = async (expenseData: any) => {
 	const response = await api.post("/Expenses", {
-		modelId: expenseData.modelId, // Send modelId
-		jobId: expenseData.jobId, // Send jobId
-		date: expenseData.date, // Send dato
-		text: expenseData.text, // Send beskrivelse
-		amount: expenseData.amount, // Send belÃ¸b
+		modelId: expenseData.modelId,
+		jobId: expenseData.jobId,
+		date: expenseData.date,
+		text: expenseData.text,
+		amount: expenseData.amount,
 	});
 	return response.data;
 };

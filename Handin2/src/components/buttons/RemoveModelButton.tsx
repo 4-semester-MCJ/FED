@@ -19,10 +19,13 @@ export const RemoveModelButton = ({ jobId, modelId, onModelRemoved }: RemoveMode
 
         try {
             setIsLoading(true);
+            console.log('Removing model:', modelId, 'from job:', jobId);
             await removeModelFromJob(jobId, modelId);
+            console.log('Model removed successfully');
             onModelRemoved();
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error removing model from job:', error);
+            alert(error.response?.data?.message || 'Failed to remove model from job');
         } finally {
             setIsLoading(false);
         }

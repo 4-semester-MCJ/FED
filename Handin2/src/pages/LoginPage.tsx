@@ -69,6 +69,7 @@ const LoginPage: React.FC = () => {
             <InputField
                 label="Username"
                 type="text"
+                name="email"
                 value={email}
                 placeholder="Enter your email"
                 onChange={(e) => setUsername(e.target.value)}
@@ -76,6 +77,7 @@ const LoginPage: React.FC = () => {
             <InputField
                 label="Password"
                 type="password"
+                name="password"
                 value={password}
                 placeholder="Enter your password"
                 onChange={(e) => setPassword(e.target.value)}

@@ -47,6 +47,8 @@ export const AddModelButton = ({ jobId, onModelAdded, assignedModels = [] }: Add
 
     const handleModelSelect = async (modelId: number) => {
         setError(null);
+        console.log('Selected model:', modelId, 'for job:', jobId);
+        
         //check race condition
         if (assignedModels.some((m: Model) => m.modelId === modelId)) {
             setError('Model is already assigned to this job.');
@@ -54,12 +56,14 @@ export const AddModelButton = ({ jobId, onModelAdded, assignedModels = [] }: Add
         }
         try {
             setIsLoading(true);
+            console.log('Adding model to job...');
             await addModelToJob(jobId, modelId);
+            console.log('Model added successfully');
             onModelAdded();
             setIsDropdownOpen(false);
-        } catch (error) {
-            setError('Error adding model to job');
+        } catch (error: any) {
             console.error('Error adding model to job:', error);
+            setError(error.response?.data?.message || 'Error adding model to job');
         } finally {
             setIsLoading(false);
         }
@@ -77,7 +81,7 @@ export const AddModelButton = ({ jobId, onModelAdded, assignedModels = [] }: Add
             </button>
 
             {isDropdownOpen && (
-                <div className="absolute z-10 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                <div className="absolute z-50 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                     <div className="py-1 max-h-60 overflow-y-auto" role="menu">
                         {models.length === 0 && (
                             <div className="px-4 py-2 text-gray-400 text-sm">No available models</div>
