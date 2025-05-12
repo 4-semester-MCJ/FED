@@ -12,14 +12,6 @@ api.interceptors.request.use((config) => {
 	return config;
 });
 
-api.interceptors.request.use((config) => {
-	const token = localStorage.getItem("token");
-	if (token) {
-		config.headers.Authorization = `Bearer ${token}`;
-	}
-	return config;
-});
-
 export const setAuthToken = (token: string) => {
 	api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 };
@@ -27,9 +19,9 @@ export const setAuthToken = (token: string) => {
 // Login
 export const login = async (email: string, password: string) => {
 	const response = await api.post("Account/login", { email, password });
-	console.log("Axios response:", response); // Log hele responsen
 	return response.data; // Returner token-strengen direkte
 };
+
 // Manager-specific actions
 export const createModel = async (modelData: any) => {
 	const response = await api.post("/Models", modelData);
@@ -46,20 +38,26 @@ export const createJob = async (jobData: any) => {
 	return response.data;
 };
 
-export const addModelToJob = async (jobId: string, modelId: string) => {
-	const response = await api.post(`/jobs/${jobId}/models`, { modelId });
+
+export const getAllModels = async () => {
+	const response = await api.get("/models");
 	return response.data;
 };
 
-export const removeModelFromJob = async (jobId: string, modelId: string) => {
-	const response = await api.delete(`/jobs/${jobId}/models/${modelId}`);
+export const addModelToJob = async (jobId: number, modelId: number) => {
+	const response = await api.post(`/Jobs/${jobId}/model/${modelId}`);
+	return response.data;
+};
+
+export const removeModelFromJob = async (jobId: number, modelId: number) => {
+	const response = await api.delete(`/Jobs/${jobId}/model/${modelId}`);
 	return response.data;
 };
 
 export const getAllJobs = async () => {
 	const response = await api.get("/Jobs");
 	return response.data;
-};
+  };
 
 // Model-specific actions
 export const getMyJobs = async () => {
@@ -67,13 +65,13 @@ export const getMyJobs = async () => {
 	return response.data;
 };
 
-export const addExpenseToJob = async (jobId: string, expenseData: any) => {
+export const addExpenseToJob = async (expenseData: any) => {
 	const response = await api.post("/Expenses", {
-		modelId: expenseData.modelId, // Send modelId
-		jobId: expenseData.jobId, // Send jobId
-		date: expenseData.date, // Send dato
-		text: expenseData.text, // Send beskrivelse
-		amount: expenseData.amount, // Send belÃ¸b
+		modelId: expenseData.modelId,
+		jobId: expenseData.jobId,
+		date: expenseData.date,
+		text: expenseData.text,
+		amount: expenseData.amount,
 	});
 	return response.data;
 };
