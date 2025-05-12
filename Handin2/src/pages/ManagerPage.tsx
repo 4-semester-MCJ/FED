@@ -319,7 +319,7 @@ const ManagerPage: React.FC = () => {
 					</div>
 				</Modal>
 				<Button onClick={() => setIsManagerModalOpen(true)}>
-					<FontAwesomeIcon icon={faUserTie} className="w-4 h-4 mr-2" />
+					<FontAwesomeIcon icon={faUserTie} className="w-8/ h-4 mr-2" />
 					Ny manager
 				</Button>
 				<ManagerModal

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/api";
-import InputField from "../components/fields/input_fields"; // Importer InputField-komponenten
-import {jwtDecode} from "jwt-decode"; // Installer med: bun add jwt-decode
+import InputField from "../components/fields/input_fields";
+import {jwtDecode} from "jwt-decode"; // Install jwt-decode
 
 const LoginPage: React.FC = () => {
     const [email, setUsername] = useState("");

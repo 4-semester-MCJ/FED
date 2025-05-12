@@ -80,21 +80,12 @@ const ManagerModal: React.FC<ManagerModalProps> = ({
 					name="password"
 				/>
 
-				<div className="flex justify-end space-x-3">
-					<Button
-						type="button"
-						onClick={onClose}
-						className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md"
-					>
-						Annuller
-					</Button>
 					<Button
 						type="submit"
 						className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md"
 					>
 						Opret manager
 					</Button>
-				</div>
 			</form>
 		</Modal>
 	);
