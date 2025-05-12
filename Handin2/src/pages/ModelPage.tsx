@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getMyJobs, addExpenseToJob } from "../services/api";
-
-interface Job {
-	jobId: number;
-	customer: string;
-	startDate: string;
-	days: number;
-	location: string;
-	comments: string;
-}
+import type { Job } from "../interfaces/job";
 
 const ModelPage: React.FC = () => {
 	const [jobs, setJobs] = useState<Job[]>([]);
