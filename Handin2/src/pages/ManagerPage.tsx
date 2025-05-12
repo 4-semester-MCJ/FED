@@ -322,6 +322,7 @@ const ManagerPage: React.FC = () => {
                 isOpen={isAddJobModalOpen}
                 onClose={() => setIsAddJobModalOpen(false)}
                 onJobAdded={fetchJobs}
+                onDataChange={() => {}}
             />
             {loading ? (
                 <div className="text-center">Loading...</div>

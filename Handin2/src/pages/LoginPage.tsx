@@ -70,6 +70,7 @@ const LoginPage: React.FC = () => {
                 label="Username"
                 type="text"
                 value={email}
+                name="email"
                 placeholder="Enter your email"
                 onChange={(e) => setUsername(e.target.value)}
             />
@@ -77,6 +78,7 @@ const LoginPage: React.FC = () => {
                 label="Password"
                 type="password"
                 value={password}
+                name="password"
                 placeholder="Enter your password"
                 onChange={(e) => setPassword(e.target.value)}
             />
