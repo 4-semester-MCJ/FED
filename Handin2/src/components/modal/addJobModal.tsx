@@ -95,15 +95,6 @@ const AddJobModal: React.FC<AddJobModalProps> = ({
 					onChange={handleChange}
 					name="Comments"
 				/>
-
-				<div className="flex justify-end space-x-3">
-					<Button
-						type="button"
-						onClick={onClose}
-						className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md"
-					>
-						Annuller
-					</Button>
 					<Button
 						type="submit"
 						apiCall={() => createJob(formData)}
@@ -115,7 +106,6 @@ const AddJobModal: React.FC<AddJobModalProps> = ({
 					>
 						Opret job
 					</Button>
-				</div>
 			</form>
 		</Modal>
 	);

@@ -8,7 +8,6 @@ const ModelPage: React.FC = () => {
 	const [expenseDescription, setExpenseDescription] = useState<string>("");
 	const [expenseAmount, setExpenseAmount] = useState<string>("");
 
-	// Hent modellens jobs
 	useEffect(() => {
 		const fetchJobs = async () => {
 			try {
@@ -23,7 +22,6 @@ const ModelPage: React.FC = () => {
 		fetchJobs();
 	}, []);
 
-	// Håndter tilføjelse af en udgift
 	const handleAddExpense = async () => {
 		if (
 			!selectedJobId ||
@@ -36,7 +34,7 @@ const ModelPage: React.FC = () => {
 		}
 
 		try {
-			const modelId = localStorage.getItem("modelId"); // Hent modelId fra localStorage
+			const modelId = localStorage.getItem("modelId");
 			if (!modelId) {
 				alert("Model ID is missing. Please log in again.");
 				return;
