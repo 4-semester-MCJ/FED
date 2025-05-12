@@ -3,12 +3,20 @@ import Button from "../components/buttons/standard_button";
 import Table from "../components/table/table";
 import type { Job } from "../interfaces/job";
 import type { Model } from "../interfaces/model";
-import { getAllJobs, createModel, getAllModels} from "../services/api";
+import { getAllJobs, createModel } from "../services/api";
+import Modal from "../components/modal/modal";
+import { getAllJobs, createModel, getAllModels } from "../services/api";
 import Modal from "../components/modal/modal";
 import { AddModelButton } from "../components/buttons/AddModelButton";
 import { RemoveModelButton } from "../components/buttons/RemoveModelButton";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus, faUserTie, faBriefcase } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+	faUserPlus,
+	faUserTie,
+	faBriefcase,
+} from "@fortawesome/free-solid-svg-icons";
+import { createJob, getAllJobs } from "../services/api";
+import AddJobModal from "../components/modal/addJobModal";
 
 const ManagerPage: React.FC = () => {
 	const [jobs, setJobs] = useState<Job[]>([]);
@@ -34,20 +42,73 @@ const ManagerPage: React.FC = () => {
         password: "",
     });
 	useEffect(() => {
+		const fetchJobs = async () => {
+			try {
+				const data = await getAllJobs();
+				console.log("API Response:", data);
+				setJobs(data);
+			} catch (error) {
+				console.error("Error fetching jobs:", error);
+	const [isAddJobModalOpen, setIsAddJobModalOpen] = useState(false);
+	const [isModelModalOpen, setIsModelModalOpen] = useState(false);
+
+	const [isAddJobModalOpen, setIsAddJobModalOpen] = useState(false);
+	const [jobData, setJobData] = useState({
+		newJob: {
+			Customer: "",
+			StartDate: "",
+			Days: 1,
+			Location: "",
+			Comments: "",
+		},
+	});
+	const [modelData, setModelData] = useState({
+		firstName: "",
+		lastName: "",
+		email: "",
+		phoneNo: "",
+		addressLine1: "",
+		addressLine2: "",
+		zip: "",
+		city: "",
+		country: "",
+		birthDate: "",
+		nationality: "",
+		height: "",
+		shoeSize: "",
+		hairColor: "",
+		eyeColor: "",
+		comments: "",
+		password: "",
+	});
+
+	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const [jobsData] = await Promise.all([
-					getAllJobs(),
-					getAllModels()
-				]);
+				const [jobsData] = await Promise.all([getAllJobs(), getAllModels()]);
 				setJobs(jobsData);
 			} catch (error) {
+				console.error("Error fetching data:", error);
 			} finally {
 				setLoading(false);
 			}
 		};
 
-		fetchData();
+
+	const fetchJobs = async () => {
+		try {
+			const data = await getAllJobs();
+			console.log("API Response:", data);
+			setJobs(data);
+		} catch (error) {
+			console.error("Error fetching jobs:", error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		fetchJobs();
 	}, []);
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -86,6 +147,46 @@ const ManagerPage: React.FC = () => {
             alert("Failed to create model. Please try again.");
         }
     };
+		fetchData();
+	}, []);
+
+	const handleModelInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		setModelData((prevData) => ({
+			...prevData,
+			[name]: value,
+		}));
+	};
+
+	const handleCreateModel = async () => {
+		try {
+			await createModel(modelData);
+			alert("Model created successfully!");
+			setIsModelModalOpen(false);
+			setModelData({
+				firstName: "",
+				lastName: "",
+				email: "",
+				phoneNo: "",
+				addressLine1: "",
+				addressLine2: "",
+				zip: "",
+				city: "",
+				country: "",
+				birthDate: "",
+				nationality: "",
+				height: "",
+				shoeSize: "",
+				hairColor: "",
+				eyeColor: "",
+				comments: "",
+				password: "",
+			});
+		} catch (error) {
+			console.error("Error creating model:", error);
+			alert("Failed to create model. Please try again.");
+		}
+	};
 
 	const handleModelAdded = async () => {
 		try {
@@ -123,7 +224,11 @@ const ManagerPage: React.FC = () => {
 
 	const formatModels = (models: Model[], jobId: number) => {
 		if (!models || models.length === 0) {
-			return <div className="bg-white py-2 text-gray-500 flex flex-col justify-center h-full">No models assigned</div>;
+			return (
+				<div className="bg-white py-2 text-gray-500 flex flex-col justify-center h-full">
+					No models assigned
+				</div>
+			);
 		}
 		return (
 			<div className="bg-white py-2 flex flex-col gap-1 shadow-sm justify-center h-full">
@@ -149,7 +254,10 @@ const ManagerPage: React.FC = () => {
 			formatDate(job.startDate),
 			`${job.days} day${job.days !== 1 ? "s" : ""}`,
 			formatModels(job.models || [], job.jobId),
-			<div key={job.jobId} className="flex items-center justify-center h-full min-h-[64px]">
+			<div
+				key={job.jobId}
+				className="flex items-center justify-center h-full min-h-[64px]"
+			>
 				<AddModelButton
 					jobId={job.jobId}
 					onModelAdded={handleModelAdded}
@@ -160,20 +268,16 @@ const ManagerPage: React.FC = () => {
 		];
 	});
 
-
 	return (
 		<div className="p-6">
 			<div className="flex justify-center gap-8 mb-10">
-				<Button onClick={() => setIsModalOpen(true)}>
-					<FontAwesomeIcon icon={faUserPlus} className="w-6 h-4 mr-2" />
-					Ny model
-				</Button>
+				<Button onClick={() => setIsModalOpen(true)}>Ny model</Button>
 				<Modal
 					isOpen={isModalOpen}
 					onClose={() => setIsModalOpen(false)}
 					title="Ny Model"
 				>
-					<div className="space-y-4 max-h-[80vh] overflow-y-auto p-4">
+                    <div className="space-y-4 max-h-[80vh] overflow-y-auto p-4">
                         <input
                             type="text"
                             name="firstName"
@@ -314,18 +418,193 @@ const ManagerPage: React.FC = () => {
                             onChange={handleInputChange}
                             className="border p-2 w-full"
                         />
+                        <Button onClick={handleCreateModel}>Create Model</Button>
+                    </div>
+                </Modal>
+                <Button>Ny manager</Button>
+                <Button>Opret nyt job</Button>
+            </div>
+				<Button onClick={() => setIsModelModalOpen(true)}>
+					<FontAwesomeIcon icon={faUserPlus} className="w-6 h-4 mr-2" />
+					Ny model
+				</Button>
+				<Modal
+					isOpen={isModelModalOpen}
+					onClose={() => setIsModelModalOpen(false)}
+					title="Ny Model"
+				>
+					<div className="space-y-4 max-h-[80vh] overflow-y-auto p-4">
+						<input
+							type="text"
+							name="firstName"
+							placeholder="First Name"
+							value={modelData.firstName}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
+						<input
+							type="text"
+							name="lastName"
+							placeholder="Last Name"
+							value={modelData.lastName}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
+						<input
+							type="email"
+							name="email"
+							placeholder="Email"
+							value={modelData.email}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
+						<input
+							type="text"
+							name="phoneNo"
+							placeholder="Phone Number"
+							value={modelData.phoneNo}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
+						<input
+							type="text"
+							name="addressLine1"
+							placeholder="Address Line 1"
+							value={modelData.addressLine1}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
+						<input
+							type="text"
+							name="addressLine2"
+							placeholder="Address Line 2"
+							value={modelData.addressLine2}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
+						<input
+							type="text"
+							name="zip"
+							placeholder="ZIP Code"
+							value={modelData.zip}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
+						<input
+							type="text"
+							name="city"
+							placeholder="City"
+							value={modelData.city}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
+						<input
+							type="text"
+							name="country"
+							placeholder="Country"
+							value={modelData.country}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
+						<input
+							type="date"
+							name="birthDate"
+							placeholder="Birth Date"
+							value={modelData.birthDate}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
+						<input
+							type="text"
+							name="nationality"
+							placeholder="Nationality"
+							value={modelData.nationality}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
+						<input
+							type="text"
+							name="height"
+							placeholder="Height"
+							value={modelData.height}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
+						<input
+							type="text"
+							name="shoeSize"
+							placeholder="Shoe Size"
+							value={modelData.shoeSize}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
+						<input
+							type="text"
+							name="hairColor"
+							placeholder="Hair Color"
+							value={modelData.hairColor}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
+						<input
+							type="text"
+							name="eyeColor"
+							placeholder="Eye Color"
+							value={modelData.eyeColor}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
+						<textarea
+							name="comments"
+							placeholder="Comments"
+							value={modelData.comments}
+							onChange={(e) =>
+								setModelData((prevData) => ({
+									...prevData,
+									comments: e.target.value,
+								}))
+							}
+							className="border p-2 w-full"
+						/>
+						<input
+							type="password"
+							name="password"
+							placeholder="Password"
+							value={modelData.password}
+							onChange={handleModelInputChange}
+							className="border p-2 w-full"
+						/>
 						<Button onClick={handleCreateModel}>Create Model</Button>
-					</div>	
+					</div>
 				</Modal>
 				<Button>
 					<FontAwesomeIcon icon={faUserTie} className="w-4 h-4 mr-2" />
 					Ny manager
 				</Button>
-				<Button>
+				<Button onClick={() => setIsAddJobModalOpen(true)}>
 					<FontAwesomeIcon icon={faBriefcase} className="w-4 h-4 mr-2" />
 					Opret nyt job
 				</Button>
 			</div>
+
+				<Button>Ny model</Button>
+				<Button>Ny manager</Button>
+				<Button onClick={() => setIsAddJobModalOpen(true)}>
+					Opret nyt job
+				</Button>
+			</div>
+
+			<AddJobModal
+				isOpen={isAddJobModalOpen}
+				onClose={() => setIsAddJobModalOpen(false)}
+				onJobAdded={handleModelAdded}
+				onDataChange={setJobData}
+			/>
+
+				onJobAdded={fetchJobs}
+				onDataChange={setJobData}
+			/>
+
 			{loading ? (
 				<div className="text-center">Loading...</div>
 			) : jobs.length === 0 ? (
@@ -337,6 +616,6 @@ const ManagerPage: React.FC = () => {
 			)}
 		</div>
 	);
-};
+};};
 
 export default ManagerPage;
